@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "PWRU Documentation",
+  "name": "PULSEIntel Pro Help Center",
   "colors": {
     "primary": "#7C3AED",
     "light": "#A78BFA",
@@ -11,80 +11,44 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "User Guide",
+        "tab": "Help Center",
         "groups": [
           {
             "group": "Getting Started",
             "pages": [
               "index",
               "quickstart",
-              "onboarding"
+              "best-practices"
             ]
           },
           {
-            "group": "Core Features",
+            "group": "Your Account",
+            "pages": [
+              "account/profile",
+              "account/settings",
+              "account/billing",
+              "account/security"
+            ]
+          },
+          {
+            "group": "Features",
             "pages": [
               "features/dashboard",
               "features/ai-agents",
               "features/goals",
-              "features/crm"
-            ]
-          },
-          {
-            "group": "Content & Marketing",
-            "pages": [
+              "features/crm",
               "features/content-studio",
-              "features/marketing-hub"
-            ]
-          },
-          {
-            "group": "Analytics & Training",
-            "pages": [
+              "features/marketing-hub",
               "features/intelligence",
               "features/roleplay"
             ]
           },
           {
-            "group": "Configuration",
+            "group": "Troubleshooting",
             "pages": [
-              "features/settings",
-              "features/subscriptions"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "Architecture",
-        "groups": [
-          {
-            "group": "System Overview",
-            "pages": [
-              "architecture/overview",
-              "architecture/tech-stack"
-            ]
-          },
-          {
-            "group": "Frontend Architecture",
-            "pages": [
-              "architecture/routing",
-              "architecture/state-management",
-              "architecture/layout-system",
-              "architecture/mobile"
-            ]
-          },
-          {
-            "group": "Backend & Data",
-            "pages": [
-              "architecture/api-client",
-              "architecture/entities",
-              "architecture/caching"
-            ]
-          },
-          {
-            "group": "Patterns & Utilities",
-            "pages": [
-              "architecture/error-handling",
-              "architecture/theming"
+              "troubleshooting/common-issues",
+              "troubleshooting/login-problems",
+              "troubleshooting/connectivity-issues"
             ]
           }
         ]

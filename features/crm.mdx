@@ -1,140 +1,128 @@
 ---
 title: "CRM"
-description: "Full contact management with pipeline visualization, conversations, transactions, listings, and automations"
+description: "Manage your contacts, pipeline, conversations, transactions, and more in one place"
 ---
 
-The CRM page (`/Crm`) provides comprehensive contact and relationship management with multiple specialized views accessible via tabs.
+The built-in CRM keeps all your contacts, deals, and communications organized. It's designed specifically for real estate, so it understands pipeline stages, transaction values, and the way agents actually manage relationships.
 
-## Page Layout
+## Getting There
 
-- **Contextual Top Nav** - Eleven tabs for different CRM views
-- **Main content area** - Tab-specific content (tables, kanban boards, chat interfaces)
-- **Right sidebar** - Contact details, activity history, or context-specific panels
+Click **CRM** in the left sidebar. You'll see tabs across the top for different views.
 
-On mobile, the `MobileContactsPage` component renders.
+## Contacts
 
-## Tabs
+Your main contact list shows everyone in your database.
 
-### Contacts
+### Viewing Contacts
+- Contacts are displayed in a table with name, phone, email, status, and pipeline stage
+- Click any contact to see their full details in the right panel
+- Use the **search bar** to find contacts by name, email, or phone number
+- **Filter** by lead status or pipeline stage to narrow your view
 
-The primary contact management view with:
-- **Contact table** - Paginated list (50 per page) with columns for name, phone, email, status, pipeline stage
-- **Search and filtering** - Filter by lead status, pipeline stage, or search by name/email/phone
-- **Bulk import** - Upload contacts via CSV
-- **Contact side panel** - Clicking a contact opens detailed view in the right sidebar with:
-  - Contact information and edit capabilities
-  - Activity timeline
-  - Notes and tags
-  - Linked transactions
-  - Communication history
+### Adding a Contact
+1. Click **Add Contact**
+2. Fill in their information (name, email, phone, etc.)
+3. Set their lead status and pipeline stage
+4. Click **Save**
 
-Contact data is fetched via React Query with:
-- 2-minute stale time
-- 10-minute cache time
-- Automatic refetch on window focus
+### Importing Contacts in Bulk
+If you have a list of contacts in a spreadsheet:
+1. Click the **Import** button
+2. Upload your CSV file
+3. Map your columns to PULSEIntel Pro fields
+4. Click **Import**
 
-### Conversations
+### Contact Details
+Click any contact to see their full profile in the right panel:
+- **Contact info** — Name, email, phone, and all details (you can edit right here)
+- **Activity timeline** — A history of every interaction with this contact
+- **Notes** — Add and view notes
+- **Tags** — Organize contacts with custom labels
+- **Linked transactions** — Any deals associated with this contact
 
-Real-time messaging interface for communicating with contacts:
-- **SMS conversations** - Text message threads
-- **Email conversations** - Email chains
-- **Voice logs** - Call history and recordings
-- Thread-based view with message composition
+## Pipeline
 
-### Pipeline
+The Pipeline view shows your deals as a visual board:
 
-Kanban-style sales pipeline visualization:
-- **Drag-and-drop** stages (customizable via `PipelineStage` entity)
-- **Stage columns** with contact cards showing deal value and status
-- **Pipeline stages** include: New Lead, Contacted, Qualifying, Under Contract, Move-In Scheduled, Tenant Placed, Lease Signing, Closed
-- Contact cards show name, value, and days in stage
+- Each column represents a **stage** in your sales process (New Lead, Contacted, Qualifying, Under Contract, Closed, etc.)
+- Each card represents a contact with their deal value
+- **Drag and drop** contacts between stages as deals progress
+- See at a glance how many deals are in each stage and their total value
 
-### Transactions
+<Tip>
+The Pipeline view is the fastest way to get a snapshot of your business. Check it weekly to make sure no deals are stuck in a stage too long.
+</Tip>
 
-Deal and transaction tracking:
-- Transaction list with status, value, and timeline
+## Conversations
+
+Manage all your communications with contacts in one place:
+- **SMS** — View and send text messages
+- **Email** — Read and compose email threads
+- **Voice** — Review call history and listen to recordings
+
+## Transactions
+
+Track your deals from contract to close:
+- View all active and completed transactions
+- Track closing dates, commission amounts, and key milestones
 - Link transactions to contacts
-- Track closing dates, commission amounts
-- Document checklists
+- Monitor document checklists to make sure nothing falls through the cracks
 
-### Listings
+## Listings
 
-Real estate property listing management:
-- Property details (address, price, type, status)
-- MLS integration data
-- Photo galleries
-- Listing-to-contact associations
+Manage your property listings:
+- Add listing details like address, price, property type, and status
+- Track MLS information
+- Organize listing photos
+- Connect listings to interested buyer contacts
 
-### Tasks
+## Tasks
 
-Contact-related task management:
-- Create follow-up tasks linked to specific contacts
-- Due date tracking
-- Priority levels
-- Completion status
+Create and manage follow-up tasks tied to specific contacts:
+- Set due dates and priority levels
+- Track completion status
+- Make sure you never miss a follow-up
 
-### Insights
+## Insights
 
-CRM analytics and behavioral insights:
-- Contact engagement scoring
-- Pipeline velocity metrics
-- Conversion rate analysis
-- Activity distribution
+View analytics about your CRM activity:
+- **Engagement scoring** — See which contacts are most engaged
+- **Pipeline velocity** — How fast deals move through your stages
+- **Conversion rates** — Your success rate at each stage
+- **Activity distribution** — Where you're spending your time
 
-### Automations
+## Automations
 
-Workflow automation setup:
-- Trigger-based actions (e.g., auto-email on stage change)
-- Drip campaign configuration
-- Follow-up reminders
-- Lead assignment rules
+Set up workflows that run automatically to save you time:
+- Send an email automatically when you move a contact to a new stage
+- Set up drip campaigns to nurture leads over time
+- Create automatic follow-up reminders
+- Configure lead assignment rules for teams
 
-### Templates
+## Templates
 
-Message and email template library:
-- Pre-built templates for common communications
-- Custom template creation
-- Variable substitution (contact name, property details, etc.)
-- Template categories
+Build a library of reusable messages:
+- Browse pre-built templates for common situations (initial outreach, follow-up, closing, etc.)
+- Create your own custom templates
+- Use smart variables like contact name and property address that fill in automatically
+- Organize templates by category for quick access
 
-### Campaigns
+## Campaigns
 
-Marketing campaign management within the CRM context:
-- Campaign creation and scheduling
-- Contact list segmentation
-- Performance tracking
-- Multi-channel campaigns (email, SMS, social)
+Run marketing campaigns right from your CRM:
+- Create targeted campaigns for specific groups of contacts
+- Schedule email and SMS campaigns
+- Track open rates, responses, and overall performance
+- Run multi-channel outreach (email + SMS + social)
 
-### Mercury
+## Mercury
 
-Activity feed integration showing a real-time stream of CRM events:
-- Contact interactions
-- Pipeline movements
-- Task completions
-- System notifications
+A real-time activity feed showing everything happening in your CRM:
+- New interactions with contacts
+- Deals moving through your pipeline
+- Completed tasks
+- Important updates you should know about
 
-## Contact Data Model
-
-Contacts are stored in the `CrmContact` entity with key fields:
-
-| Field | Description |
-|-------|-------------|
-| `name` | Contact full name |
-| `email` | Email address |
-| `phone` | Phone number |
-| `leadStatus` | Current lead status (new, active, closed, etc.) |
-| `pipelineStageId` | Current pipeline stage reference |
-| `transactionValue` | Associated deal value |
-| `projectedCommission` | Expected GCI from this contact |
-| `closingDate` | Expected or actual closing date |
-| `tags` | Contact tags for segmentation |
-| `notes` | Free-text notes |
-| `lastContactDate` | Most recent interaction timestamp |
-
-## Data Management
-
-- Contacts are fetched with React Query and paginated (50 per page)
-- Activities are tracked via the `CrmActivity` entity
-- Pipeline stages are ordered by `sortOrder` field
-- Bulk operations support CSV import
-- Pull-to-refresh available on mobile
+<Tip>
+Your CRM data powers many features across PULSEIntel Pro — your Dashboard tasks, goal tracking, Intelligence scores, and AI agent recommendations all depend on up-to-date contacts. Make it a habit to update your CRM after every interaction.
+</Tip>

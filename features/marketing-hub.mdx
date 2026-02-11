@@ -1,119 +1,91 @@
 ---
 title: "Marketing Hub"
-description: "Content calendar, campaign management, templates, and AI content creation tools"
+description: "Plan, create, and manage your marketing with a content calendar, campaigns, and AI tools"
 ---
 
-The Marketing Hub (`/MarketingHub`) provides a centralized marketing management platform with a content calendar, campaign tracking, template library, and AI content generation.
+The Marketing Hub is your central command for planning and executing your marketing strategy. It combines a content calendar, AI content creation, campaign management, and template library in one place.
 
-## Page Layout
+## Getting There
 
-The Marketing Hub uses an internal tab system (shadcn `Tabs` component) rather than the `ContextualTopNav`:
-- **Overview** - Dashboard with today's focus, content calendar, and recent content
-- **AI Creator** - Full AI content generator
-- **Recents** - All recently generated content
-- **Preferences** - Content generation settings
+Click **Marketing Hub** in the left sidebar. You'll see four tabs: **Overview**, **AI Creator**, **Recents**, and **Preferences**.
 
-## Overview Tab
+## Overview
 
-### Quick Access Cards
+The Overview gives you a snapshot of your marketing activity for today and the month ahead.
 
-Two navigation cards at the top:
-- **Templates** - Links to `/MarketingTemplates` for browsing social post templates
-- **Campaigns** - Links to `/MarketingCampaigns` for campaign management
+### Today's Focus
 
-### Today's Focus (Left Column)
+On the left side, you'll see what's on your marketing plate today:
 
-Shows what's on the agenda today:
+- **Today's Content Template** — If there's a scheduled content topic for today, it's shown here with a **Copy** button (to grab the topic) and a **Generate** button (to create AI content around it)
+- **Calendar Items** — Any social posts, emails, or campaign steps scheduled for today
+- **Active Campaigns** — Campaigns currently in progress with a link to view details
 
-#### Daily Template
-If a `TaskTemplate` with `category: 'social_media'` and `triggerType: 'day_of_week'` matches today's day:
-- Displays the template title and description
-- **Copy** button to clipboard
-- **Generate** button to create AI content from the template topic
+### Content Calendar
 
-#### Calendar Items
-Items from the marketing calendar for today:
-- Social posts with Canva template links
-- Email campaigns in progress
-- Active campaign steps with progress indicators
+On the right side, a full **monthly calendar** shows your marketing schedule at a glance:
+- **Blue badges** — Recurring content topics (like "Market Update Monday" or "Tip Tuesday")
+- **Purple badges** — Specific content items or events you've scheduled
+- **Today** is highlighted with a border so you can spot it easily
 
-#### Active Campaigns
-Current campaigns with:
-- Campaign name and current step
-- Link to view full campaign details
+**To add something to the calendar:**
+1. Click on any date
+2. Fill in the details (content topic, type, linked template or campaign)
+3. Click **Save**
 
-### Content Calendar (Right Column)
+**To edit or delete an entry:**
+1. Click on the entry in the calendar
+2. Make your changes or click **Delete**
+3. Click **Save**
 
-A full monthly calendar (`MonthlyCalendar` component) showing:
-- **Template markers** - Blue badges for recurring social media templates by day of week
-- **Calendar entries** - Purple badges for scheduled content items
-- **Today highlight** - Purple border on current date
-- **Click to add** - Click any date to create a new calendar entry
-- **Entry details** - Click entries to edit via `CalendarEntryModal`
-- **Add Event** button for creating new calendar entries
+### Recent Content
 
-Calendar data is fetched via the `marketing/getCalendarMonth` backend function.
+Below Today's Focus, you'll see your last 3 generated content items. Click any to view the full content.
 
-### Recent Content (Left Column)
+### Quick Access
 
-Shows the last 3 generated content items with:
-- Content type badge
-- Title (truncated)
-- Creation date
-- Click to view full content in `ContentDetailModal`
+Two cards at the top link you to:
+- **Templates** — Browse your library of social post and email templates
+- **Campaigns** — Manage your marketing campaigns
 
-## AI Creator Tab
+## AI Creator
 
-Embeds the `AIContentGenerator` component for full content generation:
-- Topic selection and customization
-- Platform targeting
-- Tone and length preferences
-- Market intelligence integration
-- Generated content preview and save
+The AI Creator tab gives you a full content generation tool:
 
-## Recents Tab
+1. Enter your **topic** or select from suggestions
+2. Choose the **platform** you're creating for
+3. Set your preferred **tone** and **length**
+4. Click **Generate**
+5. Preview the content, then copy or save it
 
-The `RecentGenerated` component shows all generated content:
-- Full list with type, title, and date
-- Click to view in detail modal
-- Limited to last 20 items
+The AI Creator uses your market data to make content relevant to your local area.
 
-## Preferences Tab
+## Recents
 
-Content generation defaults:
-- **Default Tone** - Professional, casual, educational, promotional
-- **Default Length** - Short, medium, long
-- Save button persists to `ContentPreference` entity
+View all your recently generated content in one list:
+- See the content type, title, and creation date for each item
+- Click any item to view the full content
+- Your last 20 generated items are saved here
 
-## AI Content Generation from Calendar
+## Preferences
 
-When generating content from a calendar template:
+Set your default content preferences:
+- **Default Tone** — Professional, casual, educational, or promotional
+- **Default Length** — Short, medium, or long
 
-1. Finds the `content_studio_social_post` prompt config
-2. Combines template title and description as the topic
-3. Injects market intelligence data (if available) as context
-4. Calls `openaiChat` with GPT-4o (max 1500 tokens, temperature 0.7)
-5. Saves result to `GeneratedContent` entity
-6. Refreshes the recent content list
+These defaults apply to all content generation across both the Marketing Hub and Content Studio.
 
-## Calendar Entry Management
+## Marketing Hub vs. Content Studio
 
-The `CalendarEntryModal` supports:
-- Creating new entries on specific dates
-- Editing existing entries
-- Linking to post templates, email templates, or campaigns
-- Deleting entries
-- Refreshing calendar data after changes
+Both tools create AI-generated content, but they serve different purposes:
 
-## Data Sources
+| | Marketing Hub | Content Studio |
+|--|--------------|---------------|
+| **Best for** | Planning and scheduling your marketing | Quick, on-demand content creation |
+| **Calendar** | Full monthly view with scheduling | Weekly view organized by topic |
+| **Campaigns** | Campaign tracking and management | Not included |
+| **Templates** | Template library access | Content pack library |
 
-| Entity | Purpose |
-|--------|---------|
-| `GeneratedContent` | Stored AI-generated content |
-| `ContentPreference` | User's default generation settings |
-| `AiPromptConfig` | AI prompt templates |
-| `TaskTemplate` | Recurring content schedule by day |
-| `MarketIntelligence` | Market data for content context |
-| `PostTemplate` | Social post templates |
-| `EmailTemplate` | Email templates |
-| `MarketingCampaign` | Campaign definitions |
+<Tip>
+Use the Marketing Hub for your weekly marketing planning sessions. Schedule your content topics on the calendar at the start of each week, then use the AI Creator or Content Studio to generate the actual content when it's time to post.
+</Tip>

@@ -1,123 +1,96 @@
 ---
 title: "Content Studio"
-description: "AI-powered content generation for social media posts, emails, phone scripts, and text messages"
+description: "Generate social media posts, emails, phone scripts, and text messages with AI"
 ---
 
-The Content Studio (`/ContentStudio`) is an AI-powered content generation platform for creating marketing materials. It generates social media posts, email scripts, phone scripts, and text/DM templates.
+The Content Studio is your AI-powered content creation tool. It generates ready-to-use social media posts, email scripts, phone scripts, and text messages — all tailored to your market, brand voice, and preferences.
 
-## Page Layout
+## Getting There
 
-- **Contextual Top Nav** - Tabs: Create & Post, Calendar, Recents, Preferences
-- **Main content area** - Tab-specific content
-- **Right sidebar** - Pack details or AI generator form
+Click **Content Studio** in the left sidebar. You'll see four tabs: **Create & Post**, **Calendar**, **Recents**, and **Preferences**.
 
-On mobile, the `MobileContentStudioPage` component renders.
+## Create & Post
 
-## Tabs
+This is where the magic happens. You have two ways to generate content:
 
-### Create & Post
+### Weekly Content Packs
 
-The primary content generation interface with two sections:
+PULSEIntel Pro organizes content topics by day of the week. Each day has a themed pack that includes:
+- **Social media post** — Ready to copy and paste to your platforms
+- **Email script** — A professional email you can send to your database
+- **Phone script** — Talking points for calls
+- **Text/DM template** — Short messages for texts or direct messages
 
-#### Weekly Content Packs
-AI-generated content packs organized by day, including:
-- **Social Feed Posts** - Platform-ready social media content
-- **Email Scripts** - Professional email templates
-- **Phone Scripts** - Call talking points
-- **Text/DM Templates** - Short-form messaging
+Click on any day's pack to generate fresh content for that topic. Don't like what was generated? Click **Regenerate** for a new version.
 
-Each pack shows the day's topic and can be generated or regenerated on demand.
+### Ready-to-Use Packs
 
-#### Ready-to-Use Packs
-Pre-made featured content packs (`FeaturedContentPack` entity):
-- Browse curated content collections
-- Some packs are gated by subscription tier
-- Click to view details in the right sidebar
-- Generate content directly from packs
+Browse curated content collections created by our team. These are pre-built packs around popular real estate topics:
+- Click any pack to preview it in the right panel
+- Click **Generate** to create content from the pack
+- Some premium packs are available only on paid plans
 
-### Calendar
+## Calendar
 
-A weekly calendar view showing:
-- Task templates (`TaskTemplate` entity) scheduled by day of week
-- Content generation triggers for each day
-- Drag-to-generate functionality for quick content creation
+A weekly view showing your content schedule:
+- See which topics are planned for each day
+- Click on a day to generate that day's content
+- Drag topics around to rearrange your schedule
 
-### Recents
+## Recents
 
-View and manage recently generated content:
-- List of generated content items sorted by creation date
-- Click to view full content in a detail modal
-- Content type badges (social post, email, phone script, etc.)
+View all content you've recently generated:
+- Browse by content type (social post, email, phone script, etc.)
+- Click any item to see the full content
+- Copy content to your clipboard for easy sharing
 
-### Preferences
+## Preferences
 
-Configure default content generation settings:
-- **Default Tone** - Professional, casual, educational, promotional
-- **Default Length** - Short, medium, long
-- **Market Focus** - Primary territory for localized content
-- **Target Audience** - Audience description for tone calibration
+Set your default content generation preferences so every piece of content matches your style:
 
-Preferences are stored in the `ContentPreference` entity.
+- **Tone** — Professional, casual, educational, or promotional
+- **Length** — Short, medium, or long
+- **Market Focus** — Your primary territory for localized content
+- **Target Audience** — Who you're speaking to
 
-## AI Content Generation
+<Tip>
+Setting your preferences saves you time on every generation. Do this once and your content will consistently match your brand voice.
+</Tip>
 
-### How It Works
+## Types of Content You Can Create
 
-Content generation uses GPT-4o via the `openaiChat` backend function:
+| Content Type | What It Is | Best For |
+|-------------|-----------|---------|
+| **Social Media Post** | Platform-ready post with caption | Facebook, Instagram, LinkedIn |
+| **Email Script** | Professional email body | Database nurturing, follow-ups |
+| **Phone Script** | Call talking points | Prospecting calls, check-ins |
+| **Text/DM Template** | Short direct message | Quick outreach, responses |
+| **Blog Post** | Long-form article | Website content, SEO |
+| **Listing Description** | Property description | MLS listings, marketing materials |
 
-1. User selects content type and topic
-2. System loads the appropriate `AiPromptConfig` (system and user message templates)
-3. Market intelligence data is injected for localized content
-4. User preferences (tone, length) are applied
-5. AI generates content
-6. Result is saved to `GeneratedContent` entity
+## How AI Content Generation Works
 
-### Prompt Configuration
+When you generate content, PULSEIntel Pro:
+1. Takes your selected topic and content type
+2. Applies your tone and length preferences
+3. Incorporates your **market data** (local statistics, neighborhood info) so content is relevant to your area
+4. Creates unique, personalized content in seconds
 
-Prompts are managed via the `AiPromptConfig` entity:
-- `promptId` - Unique identifier (e.g., `content_studio_social_post`)
-- `systemMessage` - System prompt defining AI behavior
-- `userMessageTemplate` - User prompt with `{{platform}}`, `{{topic}}` placeholders
-- `isActive` - Whether the config is currently in use
+The more you use Content Studio, the better it gets at matching your style.
 
-### Market Context
+## Credits
 
-If market intelligence data is available (`MarketIntelligence` entity), it's injected into prompts:
-- Local market statistics
-- Neighborhood information
-- Price trends
-- Competitive landscape data
+Content generation uses credits from your account:
+- Your credit balance is shown at the top of the Content Studio
+- Each generation consumes a small number of credits
+- Your subscription includes a monthly credit allocation
+- Need more? You can purchase additional credits in [Billing](/account/billing)
 
-This ensures generated content is relevant to the user's specific market.
+If you're running low on credits, you'll see a warning before generating.
 
-## Credit System
+## Tips for Great Content
 
-Content generation may consume credits depending on the subscription tier:
-- Credit balance is displayed in the top banner
-- Generation is blocked if insufficient credits remain
-- Credits are tracked per generation via the `creditsUsed` field
-- Subscriber tier users may have unlimited generation
-
-## Content Types
-
-| Type | Description |
-|------|-------------|
-| `social_post` | Social media post with caption |
-| `email_script` | Email body template |
-| `phone_script` | Phone call talking points |
-| `text_dm` | Short text/DM message |
-| `blog_post` | Long-form blog content |
-| `listing_description` | Property listing description |
-
-## Generated Content Storage
-
-Content is persisted in the `GeneratedContent` entity:
-
-| Field | Description |
-|-------|-------------|
-| `userId` | Owner of the content |
-| `contentType` | Type of content generated |
-| `contentTitle` | Title or topic |
-| `contentBody` | Full generated text |
-| `creditsUsed` | Credits consumed |
-| `created_date` | Generation timestamp |
+- **Personalize before posting** — AI content is a great starting point. Add a personal touch, local detail, or your own experience before sharing.
+- **Be consistent** — Use the weekly packs to post something every day. Consistency is key for building your online presence.
+- **Match the platform** — A LinkedIn post should feel different from an Instagram caption. Adjust the tone for each platform.
+- **Save what works** — When a post gets great engagement, note what made it resonate and ask for more like it.
