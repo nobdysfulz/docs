@@ -1,0 +1,107 @@
+---
+title: "AI Agents"
+description: "Four specialized AI agents for executive assistance, lead management, content creation, and transaction coordination"
+---
+
+The AI Agents page (`/Agents`) provides access to four specialized AI assistants, each designed for a specific aspect of real estate business management.
+
+## Available Agents
+
+| Agent | Name | Specialization | Subscription |
+|-------|------|---------------|--------------|
+| Executive Assistant | **NOVA** | General business assistance, strategy, scheduling | Subscriber |
+| Leads Agent | **PHOENIX** | Outbound calling, lead qualification, campaign management | Subscriber Plus |
+| Content Agent | **SIRIUS** | Social media content, marketing copy, email drafts | Subscriber |
+| Transaction Coordinator | **VEGA** | Transaction management, document tracking, timeline coordination | Subscriber |
+
+## Page Layout
+
+The page uses a three-panel layout:
+- **Contextual Top Nav** - Agent tabs with avatars, subtitles, and disabled state for locked agents
+- **Main content area** - Chat interface (NOVA, SIRIUS, VEGA) or call history table (PHOENIX)
+- **Right sidebar** - Agent-specific panels (guidelines, knowledge base, social accounts, transactions)
+
+## NOVA - Executive Assistant
+
+NOVA provides general-purpose AI assistance through a chat interface (`AgentChatInterface`).
+
+### Chat Features
+- Conversational AI powered by GPT-4o
+- Context-aware responses using your business plan, market data, and CRM information
+- Session memory via the `sessionCache` system
+- Message history persisted per agent type
+
+### Right Sidebar Tabs
+- **Guidelines** - View and edit the agent's behavioral guidelines via `GuidelinesPanel`
+- **Knowledge** - Upload and manage knowledge base documents via `KnowledgePanel`
+
+## PHOENIX - Leads Agent
+
+PHOENIX is an AI-powered outbound calling system for lead qualification and follow-up.
+
+<Note>
+PHOENIX requires **Subscriber Plus** tier and completion of the **Call Center Onboarding** flow.
+</Note>
+
+### Call History View
+The main content area displays a paginated table of call logs with:
+- Contact phone number and name
+- Timestamp (displayed in user's timezone, defaulting to EST)
+- Call status (completed, appointment_set, failed, initiated)
+- Recording duration
+
+### Call Actions
+- **Start Campaign** - Opens `CreateCampaignModal` to configure and launch bulk calling campaigns
+- **Call Now** - Opens `SingleCallModal` for one-off calls
+- **Download Logs** - Exports call history as CSV
+- **Refresh** - Reloads call data
+
+### Call Detail Sidebar
+Clicking a call log row opens `CallDetailSidebar` showing:
+- Full call details and metadata
+- Call recording playback
+- Transcript (if available)
+- Delete option
+
+### Call Metrics
+The right sidebar shows `CallMetrics` with aggregate statistics across all calls.
+
+## SIRIUS - Content Agent
+
+SIRIUS specializes in marketing content creation through the same chat interface.
+
+### Right Sidebar Tabs
+- **Guidelines** - Content creation guidelines and brand voice settings
+- **Social Accounts** - View connected social media accounts via `ConnectedSocialAccountsPanel`
+- **Past Content** - Browse previously generated content via `PastContentPanel`
+
+## VEGA - Transaction Coordinator
+
+VEGA assists with transaction management, document tracking, and closing timelines.
+
+### Right Sidebar Tabs
+- **Guidelines** - Transaction coordination guidelines
+- **Current Transactions** - View active transactions via `CurrentTransactionsPanel`
+
+## Agent Guidelines
+
+Each agent has configurable guidelines via `GuidelinesPanel` that control:
+- Response tone and formality
+- Industry-specific terminology preferences
+- Business context to include in responses
+- Behavioral boundaries
+
+Guidelines are stored per agent type and user, allowing personalization of each agent's behavior.
+
+## Session Management
+
+- Agent conversations use the `sessionCache` system with context keys like `{agentType}_context`
+- Switching between agents clears the previous agent's session cache
+- The URL updates with `?tab={agentId}` for direct linking to specific agents
+- Scroll position resets to top when switching agents
+
+## Onboarding Gates
+
+The page enforces two onboarding gates:
+1. **Agent Onboarding** - Required before any agent use. Redirects to `AgentOnboardingFlow` if `agentOnboardingCompleted` is false.
+2. **Call Center Onboarding** - Required for PHOENIX. Triggered when accessing the `leads_agent` tab with `?onboarding=true` if `callCenterOnboardingCompleted` is false.

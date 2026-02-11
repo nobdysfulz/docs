@@ -1,0 +1,119 @@
+---
+title: "Tech Stack"
+description: "React 18, Vite 6, Base44, TanStack Query, Tailwind CSS, and the full technology stack"
+---
+
+## Frontend
+
+| Technology | Version | Purpose |
+|-----------|---------|---------|
+| **React** | 18 | UI component library |
+| **Vite** | 6 | Build tool and dev server |
+| **React Router** | 7 | Client-side routing |
+| **TanStack React Query** | 5 | Server state management and caching |
+| **Tailwind CSS** | 3 | Utility-first CSS framework |
+| **shadcn/ui** | Latest | Pre-built accessible UI components (Button, Card, Dialog, Tabs, etc.) |
+| **Lucide React** | Latest | Icon library |
+| **Recharts** | Latest | Charting library for analytics dashboards |
+| **jsPDF** | Latest | Client-side PDF generation |
+| **date-fns** | Latest | Date utility library |
+
+## Backend
+
+| Technology | Purpose |
+|-----------|---------|
+| **Base44 SDK** | Application framework (auth, entities, functions, storage) |
+| **Supabase** | Database and storage backend (via Base44) |
+| **OpenAI GPT-4o** | AI content generation and agent conversations |
+| **ElevenLabs** | Voice synthesis for role-play and outbound calls |
+| **Stripe** | Payment processing and subscription management |
+| **Stripe Connect** | Multi-tenant billing through partner accounts |
+
+## External Integrations
+
+| Service | Purpose |
+|---------|---------|
+| **Lofty CRM** | External CRM sync for goals and contacts |
+| **Follow Up Boss** | External CRM sync alternative |
+| **Mercury** | Activity feed and AI assistant integration |
+| **Social Media APIs** | Connected social accounts for content publishing |
+
+## UI Component Library (shadcn/ui)
+
+The application uses shadcn/ui components extensively. Key components:
+
+| Component | Usage |
+|-----------|-------|
+| `Button` | All interactive actions |
+| `Card` | Content containers and KPI displays |
+| `Dialog` / `AlertDialog` | Modal windows |
+| `Tabs` | Internal tab navigation |
+| `Select` | Dropdown selections |
+| `Input` / `Textarea` | Form fields |
+| `Badge` | Status indicators and labels |
+| `Tooltip` | Contextual help text |
+| `Progress` | Progress bars for goals and usage |
+| `Skeleton` | Loading state placeholders |
+| `ScrollArea` | Scrollable containers |
+| `Separator` | Visual dividers |
+| `Sheet` | Slide-in panels |
+| `Table` | Data tables |
+
+Components are located in `src/components/ui/` and follow the shadcn/ui conventions using `class-variance-authority` for variant management and `cn()` for Tailwind class merging.
+
+## Font Stack
+
+```css
+font-family: 'Inter', ui-sans-serif, system-ui, -apple-system,
+             'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+```
+
+Headings use **SF Pro Display** where available.
+
+## Build & Development
+
+### Development Server
+```bash
+npm run dev    # Starts Vite dev server with HMR
+```
+
+### Production Build
+```bash
+npm run build  # Vite production build with tree-shaking and minification
+```
+
+### Project Structure
+
+```
+src/
+├── pages/              # Route-level page components
+│   ├── ToDo.jsx        # Dashboard
+│   ├── Agents.jsx      # AI Agents
+│   ├── Goals.jsx       # Goal tracking
+│   ├── Crm.jsx         # CRM
+│   ├── ContentStudio.jsx
+│   ├── MarketingHub.jsx
+│   ├── Intelligence.jsx
+│   ├── RolePlay.jsx
+│   ├── Settings.jsx
+│   └── Mobile*.jsx     # Mobile page variants
+├── components/
+│   ├── ui/             # shadcn/ui components
+│   ├── layout/         # Layout components (sidebar, header, nav)
+│   ├── context/        # React Context providers
+│   ├── agents/         # AI agent components
+│   ├── goals/          # Goal tracking components
+│   ├── crm/            # CRM components
+│   ├── content/        # Content Studio components
+│   ├── marketing/      # Marketing Hub components
+│   ├── intelligence/   # PGIC components
+│   ├── roleplay/       # RolePlay components
+│   ├── settings/       # Settings tab components
+│   └── onboarding/     # Onboarding flow components
+├── utils/              # Shared utility functions
+├── hooks/              # Custom React hooks
+├── entities/           # Entity definitions
+├── integrations/       # Third-party integration clients
+├── api/                # API configuration
+└── Layout.jsx          # Root layout component
+```

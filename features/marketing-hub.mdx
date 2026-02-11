@@ -1,0 +1,119 @@
+---
+title: "Marketing Hub"
+description: "Content calendar, campaign management, templates, and AI content creation tools"
+---
+
+The Marketing Hub (`/MarketingHub`) provides a centralized marketing management platform with a content calendar, campaign tracking, template library, and AI content generation.
+
+## Page Layout
+
+The Marketing Hub uses an internal tab system (shadcn `Tabs` component) rather than the `ContextualTopNav`:
+- **Overview** - Dashboard with today's focus, content calendar, and recent content
+- **AI Creator** - Full AI content generator
+- **Recents** - All recently generated content
+- **Preferences** - Content generation settings
+
+## Overview Tab
+
+### Quick Access Cards
+
+Two navigation cards at the top:
+- **Templates** - Links to `/MarketingTemplates` for browsing social post templates
+- **Campaigns** - Links to `/MarketingCampaigns` for campaign management
+
+### Today's Focus (Left Column)
+
+Shows what's on the agenda today:
+
+#### Daily Template
+If a `TaskTemplate` with `category: 'social_media'` and `triggerType: 'day_of_week'` matches today's day:
+- Displays the template title and description
+- **Copy** button to clipboard
+- **Generate** button to create AI content from the template topic
+
+#### Calendar Items
+Items from the marketing calendar for today:
+- Social posts with Canva template links
+- Email campaigns in progress
+- Active campaign steps with progress indicators
+
+#### Active Campaigns
+Current campaigns with:
+- Campaign name and current step
+- Link to view full campaign details
+
+### Content Calendar (Right Column)
+
+A full monthly calendar (`MonthlyCalendar` component) showing:
+- **Template markers** - Blue badges for recurring social media templates by day of week
+- **Calendar entries** - Purple badges for scheduled content items
+- **Today highlight** - Purple border on current date
+- **Click to add** - Click any date to create a new calendar entry
+- **Entry details** - Click entries to edit via `CalendarEntryModal`
+- **Add Event** button for creating new calendar entries
+
+Calendar data is fetched via the `marketing/getCalendarMonth` backend function.
+
+### Recent Content (Left Column)
+
+Shows the last 3 generated content items with:
+- Content type badge
+- Title (truncated)
+- Creation date
+- Click to view full content in `ContentDetailModal`
+
+## AI Creator Tab
+
+Embeds the `AIContentGenerator` component for full content generation:
+- Topic selection and customization
+- Platform targeting
+- Tone and length preferences
+- Market intelligence integration
+- Generated content preview and save
+
+## Recents Tab
+
+The `RecentGenerated` component shows all generated content:
+- Full list with type, title, and date
+- Click to view in detail modal
+- Limited to last 20 items
+
+## Preferences Tab
+
+Content generation defaults:
+- **Default Tone** - Professional, casual, educational, promotional
+- **Default Length** - Short, medium, long
+- Save button persists to `ContentPreference` entity
+
+## AI Content Generation from Calendar
+
+When generating content from a calendar template:
+
+1. Finds the `content_studio_social_post` prompt config
+2. Combines template title and description as the topic
+3. Injects market intelligence data (if available) as context
+4. Calls `openaiChat` with GPT-4o (max 1500 tokens, temperature 0.7)
+5. Saves result to `GeneratedContent` entity
+6. Refreshes the recent content list
+
+## Calendar Entry Management
+
+The `CalendarEntryModal` supports:
+- Creating new entries on specific dates
+- Editing existing entries
+- Linking to post templates, email templates, or campaigns
+- Deleting entries
+- Refreshing calendar data after changes
+
+## Data Sources
+
+| Entity | Purpose |
+|--------|---------|
+| `GeneratedContent` | Stored AI-generated content |
+| `ContentPreference` | User's default generation settings |
+| `AiPromptConfig` | AI prompt templates |
+| `TaskTemplate` | Recurring content schedule by day |
+| `MarketIntelligence` | Market data for content context |
+| `PostTemplate` | Social post templates |
+| `EmailTemplate` | Email templates |
+| `MarketingCampaign` | Campaign definitions |

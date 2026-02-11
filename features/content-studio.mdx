@@ -1,0 +1,123 @@
+---
+title: "Content Studio"
+description: "AI-powered content generation for social media posts, emails, phone scripts, and text messages"
+---
+
+The Content Studio (`/ContentStudio`) is an AI-powered content generation platform for creating marketing materials. It generates social media posts, email scripts, phone scripts, and text/DM templates.
+
+## Page Layout
+
+- **Contextual Top Nav** - Tabs: Create & Post, Calendar, Recents, Preferences
+- **Main content area** - Tab-specific content
+- **Right sidebar** - Pack details or AI generator form
+
+On mobile, the `MobileContentStudioPage` component renders.
+
+## Tabs
+
+### Create & Post
+
+The primary content generation interface with two sections:
+
+#### Weekly Content Packs
+AI-generated content packs organized by day, including:
+- **Social Feed Posts** - Platform-ready social media content
+- **Email Scripts** - Professional email templates
+- **Phone Scripts** - Call talking points
+- **Text/DM Templates** - Short-form messaging
+
+Each pack shows the day's topic and can be generated or regenerated on demand.
+
+#### Ready-to-Use Packs
+Pre-made featured content packs (`FeaturedContentPack` entity):
+- Browse curated content collections
+- Some packs are gated by subscription tier
+- Click to view details in the right sidebar
+- Generate content directly from packs
+
+### Calendar
+
+A weekly calendar view showing:
+- Task templates (`TaskTemplate` entity) scheduled by day of week
+- Content generation triggers for each day
+- Drag-to-generate functionality for quick content creation
+
+### Recents
+
+View and manage recently generated content:
+- List of generated content items sorted by creation date
+- Click to view full content in a detail modal
+- Content type badges (social post, email, phone script, etc.)
+
+### Preferences
+
+Configure default content generation settings:
+- **Default Tone** - Professional, casual, educational, promotional
+- **Default Length** - Short, medium, long
+- **Market Focus** - Primary territory for localized content
+- **Target Audience** - Audience description for tone calibration
+
+Preferences are stored in the `ContentPreference` entity.
+
+## AI Content Generation
+
+### How It Works
+
+Content generation uses GPT-4o via the `openaiChat` backend function:
+
+1. User selects content type and topic
+2. System loads the appropriate `AiPromptConfig` (system and user message templates)
+3. Market intelligence data is injected for localized content
+4. User preferences (tone, length) are applied
+5. AI generates content
+6. Result is saved to `GeneratedContent` entity
+
+### Prompt Configuration
+
+Prompts are managed via the `AiPromptConfig` entity:
+- `promptId` - Unique identifier (e.g., `content_studio_social_post`)
+- `systemMessage` - System prompt defining AI behavior
+- `userMessageTemplate` - User prompt with `{{platform}}`, `{{topic}}` placeholders
+- `isActive` - Whether the config is currently in use
+
+### Market Context
+
+If market intelligence data is available (`MarketIntelligence` entity), it's injected into prompts:
+- Local market statistics
+- Neighborhood information
+- Price trends
+- Competitive landscape data
+
+This ensures generated content is relevant to the user's specific market.
+
+## Credit System
+
+Content generation may consume credits depending on the subscription tier:
+- Credit balance is displayed in the top banner
+- Generation is blocked if insufficient credits remain
+- Credits are tracked per generation via the `creditsUsed` field
+- Subscriber tier users may have unlimited generation
+
+## Content Types
+
+| Type | Description |
+|------|-------------|
+| `social_post` | Social media post with caption |
+| `email_script` | Email body template |
+| `phone_script` | Phone call talking points |
+| `text_dm` | Short text/DM message |
+| `blog_post` | Long-form blog content |
+| `listing_description` | Property listing description |
+
+## Generated Content Storage
+
+Content is persisted in the `GeneratedContent` entity:
+
+| Field | Description |
+|-------|-------------|
+| `userId` | Owner of the content |
+| `contentType` | Type of content generated |
+| `contentTitle` | Title or topic |
+| `contentBody` | Full generated text |
+| `creditsUsed` | Credits consumed |
+| `created_date` | Generation timestamp |

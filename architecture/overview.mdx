@@ -1,0 +1,120 @@
+---
+title: "System Overview"
+description: "High-level architecture, multi-tenancy, and system design"
+---
+
+PWRU is a multi-tenant SaaS platform built on the Base44 application framework. It uses a React single-page application frontend with backend functions and entity-based data storage provided by the Base44 SDK.
+
+## High-Level Architecture
+
+```
+┌─────────────────────────────────────────────┐
+│                  Frontend                    │
+│  React 18 + Vite 6 + React Router 7         │
+│  TanStack Query + Tailwind CSS + shadcn/ui  │
+├─────────────────────────────────────────────┤
+│                 Base44 SDK                   │
+│  Auth | Entities | Functions | Storage       │
+├─────────────────────────────────────────────┤
+│             Backend Functions                 │
+│  Server-side JS (withUserPermissions /       │
+│  withServiceRole) + Supabase + External APIs │
+├─────────────────────────────────────────────┤
+│              External Services               │
+│  OpenAI (GPT-4o) | ElevenLabs | Stripe      │
+│  Lofty CRM | Follow Up Boss | Mercury       │
+└─────────────────────────────────────────────┘
+```
+
+## Multi-Tenancy
+
+PWRU supports multi-tenant deployment through the **Partner** system:
+
+### Partner Configuration
+Each partner (`Partner` entity) defines:
+- `appDisplayName` - Custom application branding name
+- `primaryColor` / `secondaryColor` - Theme colors (hex values)
+- `companyName` - Company branding
+- `faviconUrl` - Custom favicon
+- `metaDescription` - SEO meta description
+- Stripe Connect account for billing
+
+### Tenant Resolution
+1. User authenticates and their `partnerId` is loaded
+2. `PartnerContext` fetches the partner configuration
+3. The root `Layout` component converts partner colors from hex to HSL
+4. CSS custom properties are injected into `:root` for global theming
+5. All UI components inherit the partner's brand colors
+
+### Data Isolation
+- All entities include a `userId` field for row-level security
+- Backend functions use `withUserPermissions` to scope queries to the authenticated user
+- `withServiceRole` bypasses RLS for system-level operations (used sparingly)
+
+## Application Lifecycle
+
+### Startup Flow
+1. **Vite** bundles and serves the React application
+2. **Base44 SDK** initializes with app credentials
+3. **AuthProvider** checks for stored authentication token
+4. **Layout** component determines if the current route is public or protected
+5. **UserProvider** loads user profile, goals, actions, preferences, onboarding state
+6. **PartnerProvider** loads partner configuration and applies theming
+7. **AppLayout** renders with sidebar, header, and page content
+8. **Onboarding gate** redirects to onboarding if not completed
+
+### Authentication Flow
+1. User submits credentials to Base44 auth endpoint
+2. Token is stored in localStorage
+3. `base44.auth.me()` validates the token on subsequent visits
+4. Invalid tokens redirect to the login page
+5. The `useAuth()` hook provides auth state to components
+
+### Page Rendering
+1. React Router matches the URL to a page component in `src/pages/`
+2. The page component checks viewport width for mobile detection
+3. Mobile viewports render dedicated mobile page variants
+4. Desktop viewports render the full layout with sidebar and top nav
+5. React Query fetches page-specific data with caching
+
+## Key Design Patterns
+
+### Entity-Based Data Model
+All data is stored as entities via the Base44 SDK. Entities support:
+- CRUD operations (`create`, `list`, `filter`, `update`, `delete`)
+- Pagination and filtering
+- Automatic `userId` scoping
+- Timestamps (`created_date`, `updated_date`)
+
+### Backend Functions
+Server-side logic runs as Base44 functions:
+- `withUserPermissions(fn)` - Runs with user's auth context (respects RLS)
+- `withServiceRole(fn)` - Runs with elevated privileges (bypasses RLS)
+- Functions can call external APIs (OpenAI, ElevenLabs, Stripe, etc.)
+- Invoked from frontend via `base44.functions.call('functionName', params)`
+
+### Context Providers
+Global state is managed via React Context:
+- `UserContext` - User profile, goals, actions, preferences, onboarding
+- `PartnerContext` - Partner branding and configuration
+
+### Component Architecture
+- **Pages** (`src/pages/`) - Top-level route components
+- **Components** (`src/components/`) - Reusable UI components organized by feature
+- **Layout** (`src/components/layout/`) - Structural components (sidebar, header, nav)
+- **Context** (`src/components/context/`) - Context providers
+- **Utilities** (`src/utils/`) - Shared helper functions
+
+## Security Model
+
+### Frontend
+- Auth token stored in localStorage
+- All API calls include the auth token
+- Protected routes redirect to login if unauthenticated
+- Subscription tier checks gate feature access
+
+### Backend
+- `withUserPermissions` ensures users can only access their own data
+- `withServiceRole` is reserved for cross-user operations (admin, system tasks)
+- Webhook endpoints validate signatures
+- External API keys stored server-side only

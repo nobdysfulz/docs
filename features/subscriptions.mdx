@@ -1,0 +1,123 @@
+---
+title: "Subscriptions & Billing"
+description: "Subscription tiers, credit system, and billing management"
+---
+
+PWRU uses a tiered subscription model with Stripe integration for payment processing. Access to features is gated by subscription level.
+
+## Subscription Tiers
+
+### Free Tier
+- Basic dashboard and task management
+- Limited CRM (contact storage)
+- Basic role-play scenarios
+- No AI agent access
+- No Intelligence (PGIC) dashboard
+
+### Subscriber
+- Full dashboard with AI-generated tasks
+- Complete CRM with all tabs
+- Full Content Studio access
+- AI Agents: NOVA, SIRIUS, VEGA
+- Intelligence (PGIC) dashboard
+- Marketing Hub
+- Standard role-play scenarios
+
+### Subscriber Plus
+- Everything in Subscriber tier
+- **PHOENIX** (Leads Agent) - AI-powered outbound calling
+- Custom role-play scenarios
+- Advanced content packs
+- Priority support
+
+## Subscription Checks
+
+Feature gating is implemented throughout the application by checking the user's subscription status:
+
+```
+// Common pattern in components
+const { userAgentSubscription } = useUser();
+const tier = userAgentSubscription?.subscriptionTier;
+const isSubscriber = tier === 'subscriber' || tier === 'subscriber_plus';
+const isSubscriberPlus = tier === 'subscriber_plus';
+```
+
+Pages and features check these values to:
+- Show/hide premium features
+- Display upgrade prompts
+- Lock tabs in the `ContextualTopNav` (e.g., PHOENIX tab disabled for non-Plus users)
+- Gate content pack access
+
+## Credit System
+
+PWRU uses a credit-based system for metered features:
+
+### Credit Sources
+- **Subscription allocation** - Monthly credits included with subscription
+- **Purchases** - Additional credit packs via Stripe
+- **Bonuses** - Promotional credits
+- **Grants** - Admin-granted credits
+- **Refills** - Automatic monthly refill on billing cycle
+
+### Credit Consumption
+Credits are consumed by:
+- AI content generation in Content Studio
+- AI agent conversations (NOVA, SIRIUS, VEGA)
+- Role-play sessions
+- Outbound calls via PHOENIX
+
+### Credit Tracking
+The `CreditTransaction` entity records every credit change:
+
+| Field | Description |
+|-------|-------------|
+| `type` | refill, purchase, bonus, grant, reset, usage |
+| `amount` | Credits added (+) or consumed (-) |
+| `description` | Human-readable description |
+| `balance` | Running balance after transaction |
+| `created_date` | Transaction timestamp |
+
+### Credit Display
+- Credit balance shown in Content Studio top banner
+- Credits & Usage tab in Settings for detailed view
+- Progress bar showing minutes used vs allocated
+- Transaction history table (last 10 entries)
+
+## Stripe Integration
+
+### Payment Processing
+- Payments processed via **Stripe Connect** (partner accounts) or platform Stripe account
+- Supports monthly and yearly billing intervals
+- Credit card storage with PCI-compliant display (brand, last 4, expiration)
+
+### Billing Portal
+Users can manage their subscription through two portal options:
+1. **Partner Stripe Connect Portal** - Primary option if partner has Stripe Connect configured
+2. **Platform Billing Portal** - Fallback to the main platform's Stripe portal
+
+The portal supports:
+- Plan upgrades and downgrades
+- Payment method updates
+- Invoice and receipt viewing
+- Subscription cancellation
+
+### Subscription Status
+
+| Status | Description |
+|--------|-------------|
+| `active` | Subscription is current and paid |
+| `trialing` | In a free trial period |
+| `past_due` | Payment failed, grace period active |
+| `canceled` | Subscription ended |
+| `incomplete` | Initial payment not completed |
+| `unpaid` | Multiple payment failures |
+
+Status is displayed in the Billing tab with color-coded badges and icons.
+
+## Admin Billing
+
+Administrators have access to an enhanced billing tab (`BillingTab.jsx`) with:
+- Partner subscription management
+- Revenue overview (placeholder for dashboard metrics)
+- User subscription settings management
+- Stripe Connect configuration

@@ -1,0 +1,140 @@
+---
+title: "CRM"
+description: "Full contact management with pipeline visualization, conversations, transactions, listings, and automations"
+---
+
+The CRM page (`/Crm`) provides comprehensive contact and relationship management with multiple specialized views accessible via tabs.
+
+## Page Layout
+
+- **Contextual Top Nav** - Eleven tabs for different CRM views
+- **Main content area** - Tab-specific content (tables, kanban boards, chat interfaces)
+- **Right sidebar** - Contact details, activity history, or context-specific panels
+
+On mobile, the `MobileContactsPage` component renders.
+
+## Tabs
+
+### Contacts
+
+The primary contact management view with:
+- **Contact table** - Paginated list (50 per page) with columns for name, phone, email, status, pipeline stage
+- **Search and filtering** - Filter by lead status, pipeline stage, or search by name/email/phone
+- **Bulk import** - Upload contacts via CSV
+- **Contact side panel** - Clicking a contact opens detailed view in the right sidebar with:
+  - Contact information and edit capabilities
+  - Activity timeline
+  - Notes and tags
+  - Linked transactions
+  - Communication history
+
+Contact data is fetched via React Query with:
+- 2-minute stale time
+- 10-minute cache time
+- Automatic refetch on window focus
+
+### Conversations
+
+Real-time messaging interface for communicating with contacts:
+- **SMS conversations** - Text message threads
+- **Email conversations** - Email chains
+- **Voice logs** - Call history and recordings
+- Thread-based view with message composition
+
+### Pipeline
+
+Kanban-style sales pipeline visualization:
+- **Drag-and-drop** stages (customizable via `PipelineStage` entity)
+- **Stage columns** with contact cards showing deal value and status
+- **Pipeline stages** include: New Lead, Contacted, Qualifying, Under Contract, Move-In Scheduled, Tenant Placed, Lease Signing, Closed
+- Contact cards show name, value, and days in stage
+
+### Transactions
+
+Deal and transaction tracking:
+- Transaction list with status, value, and timeline
+- Link transactions to contacts
+- Track closing dates, commission amounts
+- Document checklists
+
+### Listings
+
+Real estate property listing management:
+- Property details (address, price, type, status)
+- MLS integration data
+- Photo galleries
+- Listing-to-contact associations
+
+### Tasks
+
+Contact-related task management:
+- Create follow-up tasks linked to specific contacts
+- Due date tracking
+- Priority levels
+- Completion status
+
+### Insights
+
+CRM analytics and behavioral insights:
+- Contact engagement scoring
+- Pipeline velocity metrics
+- Conversion rate analysis
+- Activity distribution
+
+### Automations
+
+Workflow automation setup:
+- Trigger-based actions (e.g., auto-email on stage change)
+- Drip campaign configuration
+- Follow-up reminders
+- Lead assignment rules
+
+### Templates
+
+Message and email template library:
+- Pre-built templates for common communications
+- Custom template creation
+- Variable substitution (contact name, property details, etc.)
+- Template categories
+
+### Campaigns
+
+Marketing campaign management within the CRM context:
+- Campaign creation and scheduling
+- Contact list segmentation
+- Performance tracking
+- Multi-channel campaigns (email, SMS, social)
+
+### Mercury
+
+Activity feed integration showing a real-time stream of CRM events:
+- Contact interactions
+- Pipeline movements
+- Task completions
+- System notifications
+
+## Contact Data Model
+
+Contacts are stored in the `CrmContact` entity with key fields:
+
+| Field | Description |
+|-------|-------------|
+| `name` | Contact full name |
+| `email` | Email address |
+| `phone` | Phone number |
+| `leadStatus` | Current lead status (new, active, closed, etc.) |
+| `pipelineStageId` | Current pipeline stage reference |
+| `transactionValue` | Associated deal value |
+| `projectedCommission` | Expected GCI from this contact |
+| `closingDate` | Expected or actual closing date |
+| `tags` | Contact tags for segmentation |
+| `notes` | Free-text notes |
+| `lastContactDate` | Most recent interaction timestamp |
+
+## Data Management
+
+- Contacts are fetched with React Query and paginated (50 per page)
+- Activities are tracked via the `CrmActivity` entity
+- Pipeline stages are ordered by `sortOrder` field
+- Bulk operations support CSV import
+- Pull-to-refresh available on mobile
