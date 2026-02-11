@@ -7,7 +7,7 @@
     "light": "#A78BFA",
     "dark": "#5B21B6"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/images/pulseappiconemblem.png",
   "navigation": {
     "tabs": [
       {
@@ -59,14 +59,23 @@
     }
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/images/PULSEIntelProLogoBlack.png",
+    "dark": "/images/PULSEIntelProLogoWhite.png",
+    "href": "https://docs.pulseintelpro.com"
   },
   "navbar": {
     "links": [
       {
         "label": "Support",
-        "href": "mailto:support@pwru.com"
+        "href": "mailto:team@powerunitcoaching.com"
+      },
+      {
+        "label": "Login",
+        "href": "https://app.pulseintelpro.com"
+      },
+      {
+        "label": "Submit A Ticket",
+        "href": "https://powerunitcoaching.com/support"
       }
     ]
   },
