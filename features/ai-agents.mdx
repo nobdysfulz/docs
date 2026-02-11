@@ -1,107 +1,123 @@
 ---
 title: "AI Agents"
-description: "Four specialized AI agents for executive assistance, lead management, content creation, and transaction coordination"
+description: "Meet your team of AI assistants — NOVA, PHOENIX, SIRIUS, and VEGA"
 ---
 
-The AI Agents page (`/Agents`) provides access to four specialized AI assistants, each designed for a specific aspect of real estate business management.
+PULSEIntel Pro gives you a team of four AI assistants, each designed to help with a different part of your real estate business. Think of them as specialized team members who are always available to help.
 
-## Available Agents
+## Meet Your Agents
 
-| Agent | Name | Specialization | Subscription |
-|-------|------|---------------|--------------|
-| Executive Assistant | **NOVA** | General business assistance, strategy, scheduling | Subscriber |
-| Leads Agent | **PHOENIX** | Outbound calling, lead qualification, campaign management | Subscriber Plus |
-| Content Agent | **SIRIUS** | Social media content, marketing copy, email drafts | Subscriber |
-| Transaction Coordinator | **VEGA** | Transaction management, document tracking, timeline coordination | Subscriber |
+| Agent | What They Do | Available On |
+|-------|-------------|-------------|
+| **NOVA** — Executive Assistant | Business strategy, scheduling advice, general questions | Subscriber |
+| **PHOENIX** — Leads Agent | AI-powered outbound calling and lead qualification | Subscriber Plus |
+| **SIRIUS** — Content Agent | Social media posts, marketing copy, email drafts | Subscriber |
+| **VEGA** — Transaction Coordinator | Transaction management, document tracking, closing timelines | Subscriber |
 
-## Page Layout
+You'll find all your agents by clicking **AI Agents** in the left sidebar. Switch between agents using the tabs at the top of the page.
 
-The page uses a three-panel layout:
-- **Contextual Top Nav** - Agent tabs with avatars, subtitles, and disabled state for locked agents
-- **Main content area** - Chat interface (NOVA, SIRIUS, VEGA) or call history table (PHOENIX)
-- **Right sidebar** - Agent-specific panels (guidelines, knowledge base, social accounts, transactions)
+## NOVA — Your Executive Assistant
 
-## NOVA - Executive Assistant
+NOVA is your go-to for business strategy, planning, and general questions. Chat with NOVA just like you would text a knowledgeable colleague.
 
-NOVA provides general-purpose AI assistance through a chat interface (`AgentChatInterface`).
+### How to Use NOVA
+1. Click the **NOVA** tab on the AI Agents page
+2. Type your question or request in the chat box
+3. NOVA responds with personalized advice based on your business plan, market, and CRM data
 
-### Chat Features
-- Conversational AI powered by GPT-4o
-- Context-aware responses using your business plan, market data, and CRM information
-- Session memory via the `sessionCache` system
-- Message history persisted per agent type
+### What to Ask NOVA
+- "Help me plan my prospecting strategy for this week"
+- "What should I prioritize to hit my Q2 goals?"
+- "Draft a follow-up plan for the leads from my open house"
+- "Analyze my pipeline and tell me where I should focus"
 
-### Right Sidebar Tabs
-- **Guidelines** - View and edit the agent's behavioral guidelines via `GuidelinesPanel`
-- **Knowledge** - Upload and manage knowledge base documents via `KnowledgePanel`
+### Customizing NOVA
+In the right panel, you can:
+- **Guidelines** — Set NOVA's tone, communication style, and focus areas
+- **Knowledge Base** — Upload documents (market reports, brokerage materials, scripts) so NOVA can reference them in conversations
 
-## PHOENIX - Leads Agent
+## PHOENIX — Your Leads Agent
 
-PHOENIX is an AI-powered outbound calling system for lead qualification and follow-up.
+PHOENIX handles AI-powered outbound calling to help you qualify leads and book appointments at scale.
 
 <Note>
-PHOENIX requires **Subscriber Plus** tier and completion of the **Call Center Onboarding** flow.
+PHOENIX is available on the **Subscriber Plus** plan. The first time you use PHOENIX, you'll go through a quick setup to configure your calling preferences.
 </Note>
 
-### Call History View
-The main content area displays a paginated table of call logs with:
-- Contact phone number and name
-- Timestamp (displayed in user's timezone, defaulting to EST)
-- Call status (completed, appointment_set, failed, initiated)
-- Recording duration
+### Making Calls
+- **Call Now** — Make a single call to a specific contact
+- **Start Campaign** — Launch a calling campaign to reach multiple contacts automatically
 
-### Call Actions
-- **Start Campaign** - Opens `CreateCampaignModal` to configure and launch bulk calling campaigns
-- **Call Now** - Opens `SingleCallModal` for one-off calls
-- **Download Logs** - Exports call history as CSV
-- **Refresh** - Reloads call data
+### Viewing Your Call History
+The PHOENIX tab shows a log of all your calls with:
+- Contact name and phone number
+- When the call happened
+- Call status (completed, appointment set, failed)
+- How long the call lasted
 
-### Call Detail Sidebar
-Clicking a call log row opens `CallDetailSidebar` showing:
-- Full call details and metadata
-- Call recording playback
-- Transcript (if available)
-- Delete option
+### Reviewing Call Details
+Click any call in the list to see:
+- Full call details
+- Listen to the recording
+- Read the transcript
+- Overall call metrics in the right panel
 
-### Call Metrics
-The right sidebar shows `CallMetrics` with aggregate statistics across all calls.
+### Downloading Call Logs
+Click **Download Logs** to export your call history as a spreadsheet (CSV file).
 
-## SIRIUS - Content Agent
+## SIRIUS — Your Content Agent
 
-SIRIUS specializes in marketing content creation through the same chat interface.
+SIRIUS specializes in creating marketing content for your business. Chat with SIRIUS to generate social media posts, email drafts, listing descriptions, and more.
 
-### Right Sidebar Tabs
-- **Guidelines** - Content creation guidelines and brand voice settings
-- **Social Accounts** - View connected social media accounts via `ConnectedSocialAccountsPanel`
-- **Past Content** - Browse previously generated content via `PastContentPanel`
+### How to Use SIRIUS
+1. Click the **SIRIUS** tab on the AI Agents page
+2. Tell SIRIUS what content you need — be specific about the topic, platform, and tone
+3. SIRIUS generates content tailored to your market and brand voice
 
-## VEGA - Transaction Coordinator
+### Customizing SIRIUS
+In the right panel, you can:
+- **Guidelines** — Set your brand voice, content preferences, and style rules
+- **Social Accounts** — See which social media accounts you've connected
+- **Past Content** — Browse content SIRIUS has created for you before
 
-VEGA assists with transaction management, document tracking, and closing timelines.
+## VEGA — Your Transaction Coordinator
 
-### Right Sidebar Tabs
-- **Guidelines** - Transaction coordination guidelines
-- **Current Transactions** - View active transactions via `CurrentTransactionsPanel`
+VEGA helps you manage your transactions from contract to closing. Chat with VEGA to get help with timelines, document tracking, and coordination tasks.
 
-## Agent Guidelines
+### How to Use VEGA
+1. Click the **VEGA** tab on the AI Agents page
+2. Ask VEGA about your active transactions, upcoming deadlines, or document requirements
+3. VEGA provides guidance based on your current transaction pipeline
 
-Each agent has configurable guidelines via `GuidelinesPanel` that control:
-- Response tone and formality
-- Industry-specific terminology preferences
-- Business context to include in responses
-- Behavioral boundaries
+### Customizing VEGA
+In the right panel, you can:
+- **Guidelines** — Set VEGA's coordination style and communication preferences
+- **Current Transactions** — View your active transactions at a glance
 
-Guidelines are stored per agent type and user, allowing personalization of each agent's behavior.
+## Customizing Your Agents
 
-## Session Management
+### Setting Guidelines
+Each agent can be customized to match your preferred working style:
 
-- Agent conversations use the `sessionCache` system with context keys like `{agentType}_context`
-- Switching between agents clears the previous agent's session cache
-- The URL updates with `?tab={agentId}` for direct linking to specific agents
-- Scroll position resets to top when switching agents
+1. Open any agent's tab
+2. Click **Guidelines** in the right panel
+3. Edit the guidelines to set:
+   - How formal or casual you want responses to be
+   - Topics or approaches to emphasize
+   - Your preferred terminology and brand voice
+   - Any specific instructions for the agent
 
-## Onboarding Gates
+### Uploading Knowledge Base Documents
+Help your agents give you better advice by uploading relevant documents:
 
-The page enforces two onboarding gates:
-1. **Agent Onboarding** - Required before any agent use. Redirects to `AgentOnboardingFlow` if `agentOnboardingCompleted` is false.
-2. **Call Center Onboarding** - Required for PHOENIX. Triggered when accessing the `leads_agent` tab with `?onboarding=true` if `callCenterOnboardingCompleted` is false.
+1. Open the agent you want to enhance (currently available for NOVA)
+2. Click **Knowledge Base** in the right panel
+3. Upload documents like market reports, scripts, brokerage materials, or any reference you want the agent to know about
+
+<Tip>
+The more context you give your agents through guidelines and knowledge base documents, the more personalized and useful their responses become. Take 5 minutes to set up each agent's guidelines — it makes a big difference.
+</Tip>
+
+## First Time Using Agents?
+
+The first time you visit the AI Agents page, you'll go through a quick **Agent Onboarding** that introduces each agent and helps you set initial preferences. This only happens once.

@@ -1,116 +1,85 @@
 ---
-title: "Dashboard (ToDo)"
-description: "Daily task management with AI-generated actions, outcome tracking, and performance insights"
+title: "Your Dashboard"
+description: "Your daily command center with AI-generated tasks, performance tracking, and insights"
 ---
 
-The Dashboard is the default landing page (`/ToDo`) and serves as the daily command center. It displays AI-generated tasks, performance summaries, and actionable insights.
+The Dashboard is the first thing you see when you open PULSEIntel Pro. Think of it as your daily game plan — an AI-generated action list that tells you exactly what to focus on today to move your business forward.
 
-## Page Layout
+## Your Daily Brief
 
-The page uses a two-column layout on desktop:
-- **Main content area** - Daily brief card, task list with filtering
-- **Right sidebar** - Insights panel, top contacts, relationship maintenance, AI coach
+At the top of the Dashboard, you'll see a summary card with your key numbers:
+- **Your Intelligence Score** — Your overall PGIC performance score
+- **Tasks completed today** — How many items you've knocked out
+- **Goal progress** — A quick look at how you're tracking toward your production targets
+- **Your streak** — How many consecutive days you've completed your tasks
 
-On mobile, a dedicated `MobileHomePage` component renders with a simplified layout and pull-to-refresh support.
+## Your Task List
 
-## Daily Brief Card
+Every day, PULSEIntel Pro generates a personalized action plan based on your goals, pipeline, and past activity. You'll also see follow-up tasks from your CRM and any tasks you've created manually.
 
-At the top of the page, a summary card shows:
-- **PGIC Score** - Your current Pulse Graph Intelligence Core composite score
-- **Tasks completed** - Count of finished tasks for the day
-- **Goal progress** - High-level progress toward production goals
-- **Streak** - Consecutive days of task completion
+### How Tasks Are Organized
 
-## Task Management
+Your tasks are grouped by importance:
+1. **Priority Tasks** — The most impactful items for today. Start here.
+2. **Secondary Tasks** — Important but less urgent activities
+3. **Completed Tasks** — Everything you've finished today
 
-### Task Sources
+### Filtering Your Tasks
 
-Tasks are generated from multiple sources:
-- **AI-generated daily actions** - Created by the `generateDailyTasks` function based on your production plan, goals, and preferences
-- **CRM follow-ups** - Contact-related tasks from CRM activities
-- **Manual tasks** - User-created tasks
+Use the filter buttons at the top to focus on what matters:
+- **All** — See everything on your plate
+- **Completed** — Review what you've accomplished
+- **High Priority** — Focus on the most important items only
+- **In Progress** — See tasks you've started but not finished
 
-### Task Properties
+You can also use the **search bar** to find a specific task by name.
 
-Each task (`DailyAction` entity) includes:
-- **Title and description** - What needs to be done
-- **Priority** - High, medium, or low
-- **Status** - Pending, in progress, completed, skipped, snoozed
-- **Action type** - Call, email, social media, meeting, admin, etc.
-- **Linked contact** - Optional CRM contact association
-- **Scheduled time** - When the task should be performed
+### What You Can Do with Each Task
 
-### Task Filtering
+| Action | What It Does |
+|--------|-------------|
+| **Complete** | Mark the task as done — you'll be asked to log the outcome (see below) |
+| **Snooze** | Push the task to tomorrow if you can't get to it today |
+| **Skip** | Remove the task from your list. PULSEIntel Pro may suggest a replacement. |
+| **Start** | Mark the task as in progress so you can track what you're working on |
 
-Tasks can be filtered by:
-- **All** - Shows all pending and in-progress tasks
-- **Completed** - Shows finished tasks
-- **High Priority** - Only high-priority items
-- **In Progress** - Currently active tasks
+### Logging Outcomes
 
-A search field allows filtering by task title or description.
+When you complete a task, a quick form pops up asking:
+- **How did it go?** — Rate the interaction on a 1-5 scale
+- **Leads generated** — How many new leads came from this activity?
+- **Appointments set** — Did you book any appointments?
+- **Notes** — Anything you want to remember about this interaction
 
-### Task Organization
+<Tip>
+Logging outcomes is one of the most valuable habits you can build. This data feeds directly into your Intelligence scores and goal tracking, giving you a clearer picture of what's working.
+</Tip>
 
-Tasks are displayed in collapsible groups:
-1. **Priority Tasks** - High-priority items, expanded by default
-2. **Secondary Tasks** - Medium and low priority items
-3. **Completed Tasks** - Shown with reduced opacity
+## Sidebar Panels
 
-### Task Actions
-
-| Action | Behavior |
-|--------|----------|
-| **Complete** | Opens an outcome capture modal, then marks the task as done |
-| **Snooze** | Postpones the task to tomorrow |
-| **Skip** | Marks as skipped and optionally generates a replacement task |
-| **Start** | Marks the task as in-progress |
-
-### Outcome Capture
-
-When completing a task, a modal collects:
-- **Rating** - How the interaction went (1-5 scale)
-- **Leads generated** - Number of new leads from this activity
-- **Appointments set** - Number of appointments booked
-- **Notes** - Free-text outcome description
-
-This data feeds into your PULSE score and goal tracking.
-
-## Sidebar Widgets
+On the right side of your Dashboard (or accessible via the panel icon on mobile), you'll find helpful widgets:
 
 ### Insights Panel
+A snapshot of today's performance:
+- What percentage of your tasks you've completed
+- Estimated productive time invested
+- Progress toward your current goal deadlines
 
-Displays key performance metrics:
-- **Completion rate** - Percentage of today's tasks completed
-- **Time invested** - Estimated hours of productive work
-- **Goal progress** - Current progress toward nearest goal deadline
+### Top Contacts
+The contacts in your CRM who need your attention most, ranked by factors like:
+- How long it's been since you last reached out
+- Where they are in your pipeline
+- Their deal value
 
-### Top Contacts Widget
+### Relationship Maintenance
+Contacts who haven't heard from you in a while. These are the people who might slip through the cracks without a quick check-in call or message.
 
-Shows the highest-priority contacts from your CRM who need attention. Contacts are scored based on:
-- Last contact date
-- Pipeline stage
-- Deal value
-- Activity frequency
+### AI Coach
+Personalized coaching tips based on your activity patterns and Intelligence scores. The AI Coach might suggest adjusting your daily approach or highlighting trends in your performance.
 
-### Relationship Maintenance Widget
+## Tips for Getting the Most from Your Dashboard
 
-Highlights contacts in your database that haven't been contacted recently and may need a check-in to maintain the relationship.
-
-### AI Coach Panel
-
-Provides context-aware coaching powered by your PGIC data:
-- Behavioral insights from PULSE scoring
-- Suggested improvements
-- Performance trends
-
-## Data Flow
-
-The Dashboard loads data from multiple sources on mount:
-1. `DailyAction` entities filtered by user and date
-2. `CrmContact` data for contact widgets
-3. `CrmActivity` records for scoring
-4. PGIC data via the `usePGICData` hook
-5. User goals from `UserContext`
-
-Data refreshes when the user returns to the tab (via React Query's `refetchOnWindowFocus`).
+- **Check it every morning** — Make it the first thing you open. Your AI-generated plan is designed to prioritize what matters most today.
+- **Complete tasks in order** — Priority tasks are ranked by impact. Working top-down ensures you're always focusing on what moves the needle.
+- **Always log outcomes** — Even a quick note helps. The more data PULSEIntel Pro has, the smarter your future action plans become.
+- **Don't ignore the sidebar** — The Top Contacts and Relationship Maintenance widgets catch things your task list might miss.

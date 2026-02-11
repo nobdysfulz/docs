@@ -1,146 +1,121 @@
 ---
 title: "RolePlay Training"
-description: "AI-powered voice role-play for sales scenarios with performance analysis and objection script library"
+description: "Practice real estate conversations with AI voice role-play and get instant performance feedback"
 ---
 
-The RolePlay page (`/RolePlay`) provides AI-powered sales training through voice-based role-play scenarios. Users practice real estate conversations with an AI opponent and receive performance analysis.
+RolePlay is your personal sales training tool. Practice real estate conversations with an AI opponent through actual phone calls, then get detailed feedback on your performance. It's like having a coach available 24/7.
 
-## Page Layout
+## Getting There
 
-- **Contextual Top Nav** - Three tabs: Search, Results, Scripts
-- **Main content area** - Tab-specific content
-- **Right sidebar** - Active scenario details, script guide, or analysis
+Click **RolePlay** (or **Training**) in the left sidebar. You'll see three tabs: **Search**, **Results**, and **Scripts**.
 
-On mobile, the `MobileRolePlayPage` component renders.
+## Search Tab — Find a Scenario
 
-## Tabs
+Browse available practice scenarios to find the right one for you.
 
-### Search Tab
+### Featured Scenarios
 
-Browse and discover role-play scenarios:
+Popular scenarios are highlighted at the top, each showing:
+- The scenario name and description
+- A **difficulty badge** (Beginner, Intermediate, or Advanced)
+- The category (buyer, seller, negotiation, objection handling, etc.)
+- A **Start** button to begin practicing
 
-#### Featured Scenarios
-Popular pre-built scenarios displayed as cards with:
-- Scenario title and description
-- Difficulty badge (beginner, intermediate, advanced)
-- Category label
-- "Start" button to begin a session
+### Browsing All Scenarios
 
-#### Scenario Browser
-Full list of available scenarios from the `Scenario` entity:
-- Filter by category (buyer, seller, objection handling, negotiation, etc.)
-- Filter by difficulty level
-- Search by title or description
+Scroll down to browse the full library of scenarios. You can:
+- **Filter by category** — Focus on buyer conversations, seller conversations, objections, negotiations, etc.
+- **Filter by difficulty** — Start with beginner scenarios and work your way up
+- **Search by name** — Looking for something specific? Type it in the search bar
 
-#### Custom Scenarios
-Premium feature allowing users to create custom role-play scenarios with:
-- Custom persona descriptions
-- Specific objection types
-- Scenario context and goals
+### Custom Scenarios
 
-### Results Tab
+On the **Subscriber Plus** plan, you can create your own scenarios:
+- Define the situation and context
+- Describe the person you'll be talking to
+- Set specific objections or challenges you want to practice
 
-View completed role-play session history:
-
-#### Session Log Table
-Paginated table of past sessions with:
-- Date and time
-- Scenario name
-- Duration
-- Overall score
-- Status
-
-#### Session Analysis
-Clicking a session opens detailed analysis in the sidebar:
-- **Active Listening Score** - How well the user listened to the AI opponent
-- **Validating Feelings** - Empathy and acknowledgment scoring
-- **Voice Sentiment** - Tone analysis from the conversation
-- **Objection Handling** - Effectiveness at addressing concerns
-
-#### Transcript & Recording
-- **Audio Playback** - Call recordings accessible via signed URLs
-- **Transcript Download** - Full conversation logs downloadable as text files
-
-### Scripts Tab
-
-Browse saved objection-handling scripts:
-
-#### Script Library
-Scripts organized by type from the `ObjectionScript` entity:
-- Price objections
-- Commission objections
-- Timing objections
-- Competition objections
-- General objections
-
-#### Script Details
-Each script includes:
-- Objection description
-- Recommended response framework
-- Example dialogue
-- Tips and variations
-
-#### PDF Export
-Scripts can be exported as formatted PDF documents using jsPDF.
-
-## Voice Role-Play System
-
-### How a Session Works
+## How a RolePlay Session Works
 
 <Steps>
-  <Step title="Select Scenario">
-    Choose a pre-built or custom scenario from the Search tab.
+  <Step title="Pick a Scenario">
+    Choose a scenario from the Search tab and click **Start**.
   </Step>
-  <Step title="Start Call">
-    The system initiates a voice call via ElevenLabs integration. The user's phone number (from their profile) receives the call.
+  <Step title="Receive the Call">
+    PULSEIntel Pro calls your phone number (the one in your profile). Answer the call to begin.
   </Step>
-  <Step title="Practice Conversation">
-    The AI opponent plays the role defined in the scenario (e.g., skeptical buyer, price-sensitive seller). The user practices their sales techniques in real-time.
+  <Step title="Practice the Conversation">
+    The AI plays the role of a client — maybe a skeptical buyer, a price-sensitive seller, or someone with a specific objection. Have a natural conversation and practice your techniques.
   </Step>
-  <Step title="Session Recording">
-    The entire conversation is recorded and transcribed automatically.
+  <Step title="End the Session">
+    When you're done, hang up or click **End Session**. The call is automatically recorded and transcribed.
   </Step>
-  <Step title="AI Analysis">
-    After the session ends, AI analyzes the performance across multiple dimensions and provides scores and feedback.
+  <Step title="Get Your Feedback">
+    AI analyzes your performance and gives you detailed scores and suggestions.
   </Step>
 </Steps>
 
-### Session Data Model
+<Note>
+Make sure your phone number is correct in your [Profile](/account/profile) before starting a session. That's the number PULSEIntel Pro will call.
+</Note>
 
-Sessions are stored in the `RolePlaySession` entity:
+## Results Tab — Review Your Performance
 
-| Field | Description |
-|-------|-------------|
-| `userId` | Session owner |
-| `scenarioId` | Reference to the scenario used |
-| `duration` | Call length in seconds |
-| `status` | completed, in_progress, failed |
-| `overallScore` | Composite performance score |
-| `analysisData` | Detailed scoring breakdown |
-| `transcriptUrl` | Link to transcript file |
-| `recordingUrl` | Link to audio recording |
-| `created_date` | Session timestamp |
+After each session, you can review how you did.
 
-## Scenario Data Model
+### Session History
 
-Scenarios are stored in the `Scenario` entity:
+A table showing all your past sessions with:
+- Date and time
+- Which scenario you practiced
+- How long the session lasted
+- Your overall score
 
-| Field | Description |
-|-------|-------------|
-| `title` | Scenario name |
-| `description` | What the scenario covers |
-| `category` | buyer, seller, negotiation, etc. |
-| `difficulty` | beginner, intermediate, advanced |
-| `personaDescription` | AI opponent's character |
-| `objectives` | What the user should practice |
-| `isActive` | Whether the scenario is available |
+Click any session to see the full analysis.
 
-## Active Session View
+### Performance Analysis
 
-When a role-play session is active, the `RolePlaySession` component (separate page at `/RolePlaySession`) provides:
-- Real-time call status
-- Script guide in the sidebar for reference
-- Timer showing session duration
-- End session controls
+When you click a session, you'll see scores for:
+- **Active Listening** — How well you listened to the AI client
+- **Validating Feelings** — How effectively you showed empathy and acknowledged concerns
+- **Voice Sentiment** — Analysis of your tone and energy during the conversation
+- **Objection Handling** — How well you addressed the client's pushback
 
-The session page receives the scenario via React Router navigation state. If no scenario is provided, it redirects back to `/RolePlay`.
+### Listen Back and Read the Transcript
+
+- **Play the recording** — Listen to the full conversation to hear how you sounded
+- **Download the transcript** — Save a text file of the entire conversation for review
+
+## Scripts Tab — Objection Handling Library
+
+A library of scripts to help you handle common real estate objections.
+
+### Script Categories
+
+Scripts are organized by objection type:
+- **Price objections** — "Your price is too high" / "I can get a better deal elsewhere"
+- **Commission objections** — "Why should I pay that commission rate?"
+- **Timing objections** — "I'm not ready to buy/sell right now"
+- **Competition objections** — "Another agent offered me a better deal"
+- **General objections** — Common pushback and how to handle it
+
+### What's in Each Script
+
+Every script includes:
+- A clear description of the objection
+- A recommended response framework
+- Example dialogue showing how to handle it
+- Tips and variations for different situations
+
+### Exporting Scripts
+
+Click **Export as PDF** to save any script as a formatted PDF. Great for reviewing before client meetings or printing out for your desk.
+
+## Tips for Getting the Most from RolePlay
+
+- **Start with beginner scenarios** — Build your confidence before tackling advanced objections
+- **Practice regularly** — Even 10-15 minutes a week makes a noticeable difference in real conversations
+- **Focus on one area at a time** — If your "Active Listening" score is low, work on that specifically before moving to other areas
+- **Review your recordings** — Listening back is often more revealing than the scores alone
+- **Use scripts before sessions** — Read through relevant scripts from the Scripts tab before practicing a scenario in that category
+- **Track your progress** — Watch your scores improve over time in the Results tab

@@ -1,144 +1,110 @@
 ---
-title: "Intelligence (PGIC)"
-description: "Business intelligence dashboard with PULSE, GANE, and MORO scoring, trend analysis, and AI forecasting"
+title: "Intelligence Dashboard"
+description: "Understand your business performance with PULSE, GANE, and MORO scores"
 ---
 
-The Intelligence page (`/Intelligence`) is the business analytics dashboard powered by the **Pulse Graph Intelligence Core (PGIC)**. It provides composite scoring across three dimensions, trend analysis, AI insights, and performance forecasting.
+The Intelligence page shows you how your business is performing through three key scores that together form your **PGIC Intelligence Score** — a comprehensive measure of your execution, system usage, and market opportunity.
 
-## PGIC Scoring System
+## Getting There
 
-The PGIC system calculates an **Overall Intelligence Score** (0-100) as a composite of three sub-scores:
+Click **Intelligence** in the left sidebar. You'll see four tabs: **Overview**, **PULSE Details**, **GANE Details**, and **MORO Details**.
 
-### PULSE - Execution & Consistency
+## Your Intelligence Score
 
-Measures daily execution habits and goal progress:
-- Task completion rates
-- Activity consistency (streaks, daily engagement)
-- Goal progression velocity
+Your overall Intelligence Score (0-100) is a combination of three components:
 
-**Detailed views include:**
-- `ActivityHeatmap` - Visual heatmap of daily activity patterns
-- `ConsistencyTrend` - Line chart of consistency over time
-- `ExecutionBreakdown` - Breakdown of execution metrics by category
+### PULSE — Execution & Consistency
 
-### GANE - Predictability & System Usage
+**What it measures:** How consistently you show up and complete your daily tasks.
 
-Tracks how effectively the user leverages platform tools:
-- Feature adoption rates
-- Automation utilization
-- System engagement depth
+Your PULSE score improves when you:
+- Complete dashboard tasks daily
+- Maintain your streak of consecutive active days
+- Make steady progress toward your goals
+- Log outcomes after activities
 
-**Detailed views include:**
-- `SystemUsageMetrics` - Platform feature usage statistics
-- `AutomationUtilization` - Automation adoption and effectiveness
+### GANE — Predictability & System Usage
 
-### MORO - Market Opportunity
+**What it measures:** How well you're using the tools PULSEIntel Pro provides.
 
-Analyzes market conditions in the user's territory:
-- Local market dynamics
-- Supply/demand indicators
-- Price trend analysis
-- Competitive positioning
+Your GANE score improves when you:
+- Use multiple features of the platform regularly
+- Set up automations in your CRM
+- Use templates and campaigns
+- Keep your CRM, goals, and settings up to date
 
-**Detailed views include:**
-- `MarketSnapshot` - Current market conditions summary
-- `PerformanceVsMarket` - User performance compared to market averages
+### MORO — Market Opportunity
 
-## Page Layout
+**What it measures:** The strength of your market position and local opportunity.
 
-- **Contextual Top Nav** - Four tabs: Overview, PULSE Details, GANE Details, MORO Details
-- **Action button** - Refresh button with "last updated" timestamp
-- **Main content area** - Tab-specific dashboards
-
-On mobile, the `MobileAnalyticsPage` component renders with only the Overview tab.
+Your MORO score reflects:
+- Local market conditions in your territory
+- Supply and demand dynamics
+- Price trends in your area
+- How your activity compares to market averages
 
 ## Overview Tab
 
-### Overall Score Card
+The Overview gives you the full picture:
 
-Large display showing:
-- Composite score (0-100) with circular progress ring (SVG)
-- Trend indicator (positive/negative change)
-- Description: "Composite of PULSE, GANE, and MORO scores"
+- **Overall Score** — Your composite Intelligence Score displayed in a large circular graphic with a trend arrow showing if you're improving or declining
+- **Three Score Cards** — Individual PULSE, GANE, and MORO scores with trend indicators
+- **Trend Chart** — A graph showing how all three scores have changed over time
+- **AI Insights** — Personalized recommendations in three categories:
+  - **Behavior insights** — Suggestions for improving your daily habits
+  - **System insights** — Tips for using PULSEIntel Pro more effectively
+  - **Market insights** — Analysis of your local market conditions
+- **Forecast** — A prediction of your growth trajectory, including projected scores and goal completion probability
 
-### Score Cards Row
-
-Three `ScoreCard` components showing individual PULSE, GANE, and MORO scores with trend indicators.
-
-### Learning Mode Banner
-
-If no activity data has been collected yet (`hasMinimalData()` returns false), an info banner explains that the system is gathering data and scores will appear once enough actions are logged.
-
-### Trend Chart
-
-The `TrendChart` component shows historical score progression over time for all three sub-scores.
-
-### AI Insights & Recommendations
-
-The `InsightsFeed` component displays AI-generated insights categorized by:
-- **Behavior** insights - Link to the ToDo page for action
-- **System** insights - Link to Settings for configuration
-- **Market** insights - Informational market analysis
-
-Each insight has an optional action button that navigates to the relevant page.
-
-### Forecast Card
-
-The `ForecastCard` shows predictive analytics:
-- Growth probability percentage
-- Next period projected score
-- Business plan integration (if available)
-- Goal metrics (GCI target/current, deals target/current)
+<Note>
+If you're brand new to PULSEIntel Pro, you'll see a "Learning Mode" banner. The system needs a few days of activity data before it can calculate meaningful scores. Keep using the platform and your scores will appear soon.
+</Note>
 
 ## PULSE Details Tab
 
-Deep-dive into execution metrics:
-- Score with progress bar
-- Description of what PULSE measures
-- Activity heatmap and consistency trend charts
-- Execution breakdown
-- Filtered insights (behavior category only)
+A deep dive into your execution metrics:
+- Your PULSE score with a progress bar
+- An **activity heatmap** showing which days you've been most active
+- A **consistency trend** chart tracking your daily habits over time
+- A breakdown of your execution across different activity types
+- AI insights specifically about your behavioral patterns
 
 ## GANE Details Tab
 
-Deep-dive into system usage metrics:
-- Score with progress bar (blue-themed)
-- System usage and automation utilization panels
-- Trend chart
-- Filtered insights (system category only)
+A deep dive into how you're using the platform:
+- Your GANE score with a progress bar
+- **System usage metrics** showing which features you use most
+- **Automation utilization** — How much you've leveraged automations
+- Trend chart showing your system usage over time
+- AI insights specifically about improving your platform adoption
 
 ## MORO Details Tab
 
-Deep-dive into market opportunity:
-- Score with progress bar (green-themed)
-- Market snapshot and performance comparison
-- Trend chart
-- Filtered insights (market category only)
+A deep dive into your market opportunity:
+- Your MORO score with a progress bar
+- A **market snapshot** with current conditions in your territory
+- **Performance vs. market** — How your activity compares to market averages
+- Trend chart showing market opportunity over time
+- AI insights specifically about your market position
 
-## Data Fetching
+## How to Improve Your Scores
 
-Intelligence data is loaded via the `usePGICData` custom hook:
+### Quick Wins for PULSE
+- Complete your dashboard tasks every day (even partial completion helps)
+- Log outcomes after calls, meetings, and activities
+- Maintain your daily streak
 
-```
-usePGICData(userId) → {
-  data: { scores, insights, forecast },
-  loading,
-  error,
-  lastRefreshed,
-  refreshing,
-  refresh
-}
-```
+### Quick Wins for GANE
+- Try a new feature each week (RolePlay, Content Studio, Marketing Hub)
+- Set up at least one automation in your CRM
+- Use templates for your communications
+- Keep your profile and preferences current
 
-The hook manages:
-- Initial data loading
-- Manual refresh with loading state
-- Error handling
-- Last refresh timestamp tracking
+### Quick Wins for MORO
+- Make sure your market territory is accurately defined in [Settings](/account/settings)
+- Stay active in your defined market area
+- Track all your transactions in the CRM
 
-## Business Plan Integration
+## Refreshing Your Data
 
-The page also loads the active `BusinessPlan` for the user to provide context for forecasting:
-- Annual GCI targets
-- Deal targets
-- Used by the ForecastCard for projections
+Click the **refresh button** in the top-right corner to update your scores with the latest data. The timestamp next to it shows when your data was last refreshed.
