@@ -1,0 +1,154 @@
+---
+title: "Entities"
+description: "Data model reference for all Base44 entities used in the application"
+---
+
+All persistent data in PWRU is stored as Base44 entities. Each entity automatically includes `id`, `created_date`, and `updated_date` fields.
+
+## Core Entities
+
+### User-Related
+
+| Entity | Description |
+|--------|-------------|
+| `User` | User profiles (managed by Base44 auth) |
+| `UserOnboarding` | Onboarding completion state and progress |
+| `UserPreference` | General user preferences |
+| `UserAgentSubscription` | Subscription tier and status |
+| `UserPartnerLink` | Multi-tenant user-to-partner association |
+
+### Business Planning
+
+| Entity | Description |
+|--------|-------------|
+| `BusinessPlan` | Annual business plan with income targets |
+| `Goal` | Production and activity goals with targets and progress |
+| `MarketConfig` | Market territory configuration |
+
+### AI Agents
+
+| Entity | Description |
+|--------|-------------|
+| `AgentConfig` | AI agent configuration and settings |
+| `AgentProfile` | AI agent personality and behavior profile |
+| `AgentGuideline` | Per-agent behavioral guidelines |
+| `AgentKnowledgeBase` | Knowledge base documents for agents |
+
+### CRM
+
+| Entity | Description |
+|--------|-------------|
+| `CrmContact` | Contact records with lead status, pipeline stage, and deal info |
+| `CrmActivity` | Activity log entries (calls, emails, meetings, notes) |
+| `PipelineStage` | Sales pipeline stage definitions with sort order |
+| `CrmConversation` | SMS/email/voice conversation threads |
+
+### Tasks & Actions
+
+| Entity | Description |
+|--------|-------------|
+| `DailyAction` | Daily tasks with priority, status, and linked contacts |
+| `TaskTemplate` | Recurring task templates by day of week and category |
+
+### Content & Marketing
+
+| Entity | Description |
+|--------|-------------|
+| `GeneratedContent` | AI-generated content items |
+| `ContentPreference` | Default content generation preferences (tone, length) |
+| `AiPromptConfig` | System and user prompt templates for AI generation |
+| `FeaturedContentPack` | Curated content packs for Content Studio |
+| `PostTemplate` | Social media post templates |
+| `EmailTemplate` | Email templates |
+| `MarketingCampaign` | Marketing campaign definitions |
+| `MarketingCalendarEntry` | Calendar entries for scheduled content |
+| `MarketIntelligence` | Market data for content contextualization |
+
+### Intelligence (PGIC)
+
+| Entity | Description |
+|--------|-------------|
+| `PulseHistory` | Historical PULSE score records |
+| `PulseConfig` | PULSE scoring configuration |
+
+### Training (RolePlay)
+
+| Entity | Description |
+|--------|-------------|
+| `Scenario` | Role-play scenario definitions |
+| `RolePlaySession` | Completed role-play session records with analysis |
+| `ObjectionScript` | Objection handling scripts organized by type |
+| `ClientPersona` | AI opponent personality definitions |
+
+### Billing & Credits
+
+| Entity | Description |
+|--------|-------------|
+| `CreditTransaction` | Credit usage and refill transaction log |
+
+### System
+
+| Entity | Description |
+|--------|-------------|
+| `Partner` | Multi-tenant partner configuration (branding, colors, Stripe) |
+| `FeatureFlag` | Feature toggle flags for rollouts |
+| `LegalDocument` | Disclosures and legal text |
+| `ErrorLog` | Application error records |
+
+## Key Entity Details
+
+### CrmContact
+
+The most-used entity in the application:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `name` | string | Full name |
+| `email` | string | Email address |
+| `phone` | string | Phone number |
+| `leadStatus` | string | new, active, qualified, in_contract, closed, lost |
+| `pipelineStageId` | string | Reference to PipelineStage |
+| `transactionValue` | number | Associated deal value |
+| `projectedCommission` | number | Expected GCI |
+| `closingDate` | string | Expected/actual closing date |
+| `tags` | array | Segmentation tags |
+| `notes` | string | Free-text notes |
+| `lastContactDate` | string | Most recent interaction |
+| `source` | string | Lead source |
+
+### DailyAction
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `title` | string | Task title |
+| `description` | string | Task details |
+| `priority` | string | high, medium, low |
+| `status` | string | pending, in_progress, completed, skipped, snoozed |
+| `actionType` | string | call, email, social_media, meeting, admin |
+| `contactId` | string | Linked CRM contact (optional) |
+| `scheduledTime` | string | When to perform |
+| `outcomeRating` | number | Completion rating (1-5) |
+| `outcomeNotes` | string | Completion notes |
+| `leadsGenerated` | number | Leads from this activity |
+| `appointmentsSet` | number | Appointments from this activity |
+
+### Goal
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `title` | string | Goal name |
+| `category` | string | production or activity |
+| `targetValue` | number | Target number |
+| `currentValue` | number | Current progress |
+| `targetUnit` | string | USD or count |
+| `status` | string | active, completed, at-risk |
+| `deadline` | string | Target date |
+| `confidenceLevel` | number | Calculated completion probability |
+
+## Entity Conventions
+
+1. **User scoping** - All queries should include `userId` filter
+2. **Pagination** - Use `limit` and `offset` for large collections (e.g., CRM contacts at 50 per page)
+3. **Timestamps** - `created_date` and `updated_date` are auto-managed
+4. **IDs** - Auto-generated unique identifiers
+5. **Soft deletes** - Some entities use status fields instead of hard deletion

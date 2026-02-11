@@ -1,0 +1,116 @@
+---
+title: "Dashboard (ToDo)"
+description: "Daily task management with AI-generated actions, outcome tracking, and performance insights"
+---
+
+The Dashboard is the default landing page (`/ToDo`) and serves as the daily command center. It displays AI-generated tasks, performance summaries, and actionable insights.
+
+## Page Layout
+
+The page uses a two-column layout on desktop:
+- **Main content area** - Daily brief card, task list with filtering
+- **Right sidebar** - Insights panel, top contacts, relationship maintenance, AI coach
+
+On mobile, a dedicated `MobileHomePage` component renders with a simplified layout and pull-to-refresh support.
+
+## Daily Brief Card
+
+At the top of the page, a summary card shows:
+- **PGIC Score** - Your current Pulse Graph Intelligence Core composite score
+- **Tasks completed** - Count of finished tasks for the day
+- **Goal progress** - High-level progress toward production goals
+- **Streak** - Consecutive days of task completion
+
+## Task Management
+
+### Task Sources
+
+Tasks are generated from multiple sources:
+- **AI-generated daily actions** - Created by the `generateDailyTasks` function based on your production plan, goals, and preferences
+- **CRM follow-ups** - Contact-related tasks from CRM activities
+- **Manual tasks** - User-created tasks
+
+### Task Properties
+
+Each task (`DailyAction` entity) includes:
+- **Title and description** - What needs to be done
+- **Priority** - High, medium, or low
+- **Status** - Pending, in progress, completed, skipped, snoozed
+- **Action type** - Call, email, social media, meeting, admin, etc.
+- **Linked contact** - Optional CRM contact association
+- **Scheduled time** - When the task should be performed
+
+### Task Filtering
+
+Tasks can be filtered by:
+- **All** - Shows all pending and in-progress tasks
+- **Completed** - Shows finished tasks
+- **High Priority** - Only high-priority items
+- **In Progress** - Currently active tasks
+
+A search field allows filtering by task title or description.
+
+### Task Organization
+
+Tasks are displayed in collapsible groups:
+1. **Priority Tasks** - High-priority items, expanded by default
+2. **Secondary Tasks** - Medium and low priority items
+3. **Completed Tasks** - Shown with reduced opacity
+
+### Task Actions
+
+| Action | Behavior |
+|--------|----------|
+| **Complete** | Opens an outcome capture modal, then marks the task as done |
+| **Snooze** | Postpones the task to tomorrow |
+| **Skip** | Marks as skipped and optionally generates a replacement task |
+| **Start** | Marks the task as in-progress |
+
+### Outcome Capture
+
+When completing a task, a modal collects:
+- **Rating** - How the interaction went (1-5 scale)
+- **Leads generated** - Number of new leads from this activity
+- **Appointments set** - Number of appointments booked
+- **Notes** - Free-text outcome description
+
+This data feeds into your PULSE score and goal tracking.
+
+## Sidebar Widgets
+
+### Insights Panel
+
+Displays key performance metrics:
+- **Completion rate** - Percentage of today's tasks completed
+- **Time invested** - Estimated hours of productive work
+- **Goal progress** - Current progress toward nearest goal deadline
+
+### Top Contacts Widget
+
+Shows the highest-priority contacts from your CRM who need attention. Contacts are scored based on:
+- Last contact date
+- Pipeline stage
+- Deal value
+- Activity frequency
+
+### Relationship Maintenance Widget
+
+Highlights contacts in your database that haven't been contacted recently and may need a check-in to maintain the relationship.
+
+### AI Coach Panel
+
+Provides context-aware coaching powered by your PGIC data:
+- Behavioral insights from PULSE scoring
+- Suggested improvements
+- Performance trends
+
+## Data Flow
+
+The Dashboard loads data from multiple sources on mount:
+1. `DailyAction` entities filtered by user and date
+2. `CrmContact` data for contact widgets
+3. `CrmActivity` records for scoring
+4. PGIC data via the `usePGICData` hook
+5. User goals from `UserContext`
+
+Data refreshes when the user returns to the tab (via React Query's `refetchOnWindowFocus`).

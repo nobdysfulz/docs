@@ -1,0 +1,203 @@
+---
+title: "API Client (Base44 SDK)"
+description: "Base44 SDK usage for authentication, entities, backend functions, and storage"
+---
+
+PWRU uses the **Base44 SDK** as its primary backend framework. The SDK provides authentication, entity CRUD operations, backend function invocation, and file storage.
+
+## SDK Initialization
+
+The Base44 SDK is initialized in `src/api/base44Client.js`:
+
+```jsx
+import { createClient } from '@base44/sdk';
+
+const base44 = createClient({
+  appId: 'YOUR_APP_ID',
+  // Additional configuration
+});
+
+export default base44;
+```
+
+## Authentication
+
+### Auth Methods
+
+```jsx
+// Sign in
+await base44.auth.signIn({ email, password });
+
+// Sign up
+await base44.auth.signUp({ email, password, name });
+
+// Get current user
+const user = await base44.auth.me();
+
+// Sign out
+await base44.auth.signOut();
+```
+
+### Auth Provider
+
+The `AuthProvider` component wraps the application and:
+1. Checks for stored auth token on mount
+2. Validates the token with `base44.auth.me()`
+3. Provides `useAuth()` hook for auth state
+4. Redirects to login if token is invalid
+
+## Entity Operations
+
+Entities are the primary data storage mechanism. Each entity supports standard CRUD operations:
+
+### Create
+
+```jsx
+const contact = await base44.entities.CrmContact.create({
+  name: 'John Doe',
+  email: 'john@example.com',
+  phone: '555-0123',
+  leadStatus: 'new',
+});
+```
+
+### List (All Records)
+
+```jsx
+const contacts = await base44.entities.CrmContact.list();
+```
+
+### Filter
+
+```jsx
+const activeContacts = await base44.entities.CrmContact.filter({
+  leadStatus: 'active',
+});
+
+// With pagination
+const page = await base44.entities.CrmContact.filter(
+  { leadStatus: 'active' },
+  { limit: 50, offset: 0 }
+);
+```
+
+### Update
+
+```jsx
+await base44.entities.CrmContact.update(contactId, {
+  leadStatus: 'closed',
+  closingDate: '2025-06-15',
+});
+```
+
+### Delete
+
+```jsx
+await base44.entities.CrmContact.delete(contactId);
+```
+
+### Common Query Patterns
+
+Always scope queries to the current user:
+
+```jsx
+// Correct: User-scoped query
+const myGoals = await base44.entities.Goal.filter({
+  userId: user.id,
+  status: 'active',
+});
+
+// Incorrect: Unscoped query returns all records
+const allGoals = await base44.entities.Goal.list(); // Don't do this
+```
+
+## Backend Functions
+
+Server-side logic is invoked via `base44.functions.call()`:
+
+```jsx
+const result = await base44.functions.call('functionName', {
+  param1: 'value1',
+  param2: 'value2',
+});
+```
+
+### Function Types
+
+#### withUserPermissions
+
+Functions that run with the authenticated user's permissions. They respect row-level security and can only access the user's own data.
+
+```javascript
+// Backend function definition
+export default withUserPermissions(async (req, res) => {
+  const { userId } = req.user;
+  // Can only access this user's data
+  const data = await supabase
+    .from('table')
+    .select('*')
+    .eq('user_id', userId);
+  return res.json(data);
+});
+```
+
+#### withServiceRole
+
+Functions that run with elevated privileges, bypassing row-level security. Used for system operations, admin tasks, and cross-user data access.
+
+```javascript
+// Backend function definition
+export default withServiceRole(async (req, res) => {
+  // Can access any user's data - use carefully
+  const data = await supabase
+    .from('table')
+    .select('*');
+  return res.json(data);
+});
+```
+
+### Key Backend Functions
+
+| Function | Purpose |
+|----------|---------|
+| `generateDailyTasks` | AI-generates daily action items |
+| `openaiChat` | Sends messages to GPT-4o |
+| `generateGoalsInsights` | AI-generates goal insights |
+| `syncCrmToGoals` | Syncs CRM data to goal progress |
+| `loftySync` | Syncs with Lofty CRM |
+| `followUpBossSync` | Syncs with Follow Up Boss CRM |
+| `marketing/getCalendarMonth` | Fetches marketing calendar data |
+
+## File Storage
+
+The SDK provides file upload and signed URL access:
+
+```jsx
+// Upload a file
+const url = await base44.storage.upload(file);
+
+// Get a signed URL for private files
+const signedUrl = await base44.storage.getSignedUrl(path);
+```
+
+Used for:
+- Profile photos
+- Knowledge base documents
+- Call recordings (role-play, PHOENIX)
+- Exported PDFs
+
+## Error Handling
+
+API calls should be wrapped in try-catch blocks with appropriate error handling:
+
+```jsx
+try {
+  const result = await base44.entities.Goal.create(goalData);
+  // Success handling
+} catch (error) {
+  console.error('Failed to create goal:', error);
+  // Error UI feedback
+}
+```
+
+See [Error Handling](/architecture/error-handling) for the application's error handling patterns.

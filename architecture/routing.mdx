@@ -1,0 +1,141 @@
+---
+title: "Routing"
+description: "Client-side routing with React Router 7, page registration, and navigation patterns"
+---
+
+PWRU uses React Router 7 for client-side routing with automatic page registration from the `src/pages/` directory.
+
+## Route Structure
+
+Routes are auto-registered based on file names in `src/pages/`. The `pages.config.js` file (auto-generated, do not edit) maps page names to components.
+
+### Public Routes (No Auth Required)
+
+| Route | Component | Purpose |
+|-------|-----------|---------|
+| `/` | `LandingPage` | Public landing page |
+| `/ExternalAuth` | `ExternalAuth` | OAuth callback handler |
+| `/PropertyLanding` | `PropertyLanding` | Public property pages |
+
+### Protected Routes (Auth Required)
+
+| Route | Component | Purpose |
+|-------|-----------|---------|
+| `/ToDo` | `ToDo` | Dashboard / Home |
+| `/Agents` | `Agents` | AI Agents |
+| `/Goals` | `Goals` | Goal Tracking |
+| `/Crm` | `Crm` | CRM |
+| `/ContentStudio` | `ContentStudio` | Content Studio |
+| `/MarketingHub` | `MarketingHub` | Marketing Hub |
+| `/Intelligence` | `Intelligence` | Business Intelligence |
+| `/RolePlay` | `RolePlay` | Training |
+| `/RolePlaySession` | `RolePlaySession` | Active role-play session |
+| `/Settings` | `Settings` | Configuration |
+| `/MobileBilling` | `MobileBilling` | Mobile billing view |
+
+## Tab Navigation via URL Parameters
+
+Many pages use URL search parameters for tab state:
+
+```
+/Crm?tab=contacts
+/Crm?tab=pipeline
+/Agents?tab=executive_assistant
+/Settings?tab=billing
+```
+
+This pattern enables:
+- Direct deep-linking to specific tabs
+- Browser back/forward navigation between tabs
+- Sharing links to specific views
+
+### Implementation Pattern
+
+```jsx
+const [searchParams, setSearchParams] = useSearchParams();
+const activeTab = searchParams.get('tab') || 'default';
+
+const handleTabChange = (tab) => {
+  setSearchParams({ tab });
+};
+```
+
+## Navigation Components
+
+### Primary Navigation (Desktop)
+
+The left sidebar (`MainSidebar`) provides navigation to all major sections:
+- Dashboard (ToDo)
+- AI Agents
+- Goals
+- CRM
+- Content Studio
+- Marketing Hub
+- Intelligence
+- RolePlay
+- Settings
+
+### Contextual Top Navigation
+
+The `ContextualTopNav` component provides page-specific tab navigation:
+- Renders tab buttons with active/inactive states
+- Supports disabled tabs (e.g., locked premium features)
+- Optional agent avatars per tab
+- Subtitle support
+- Action button slot on the right
+
+### Mobile Bottom Navigation
+
+On mobile (viewport < 768px), a fixed bottom navigation bar replaces the sidebar:
+- 5 primary navigation icons
+- Active tab highlight
+- Safe-area-inset padding for notched devices
+
+## Route Guards
+
+### Authentication Guard
+
+The root `Layout` component checks authentication:
+1. Public routes (`LandingPage`, `ExternalAuth`, `PropertyLanding`) render without auth
+2. All other routes require a valid auth token
+3. Unauthenticated users are redirected to the login flow
+
+### Onboarding Guard
+
+After authentication, the `AppLayout` checks onboarding completion:
+1. If `onboarding.onboardingCompleted` is false, redirect to onboarding flow
+2. Admin users can bypass the onboarding gate
+3. The `?force-dashboard` query parameter provides emergency access
+
+### Subscription Guard
+
+Individual features check subscription tier within their components:
+- Locked features show upgrade prompts instead of content
+- Tabs can be disabled in the `ContextualTopNav`
+- Premium content packs show lock icons
+
+## Navigation Patterns
+
+### Page-to-Page Navigation
+
+```jsx
+import { useNavigate } from 'react-router-dom';
+
+const navigate = useNavigate();
+navigate('/Goals');
+navigate('/Crm?tab=pipeline');
+```
+
+### Navigation with State
+
+Some routes pass state during navigation:
+
+```jsx
+// Passing scenario data to RolePlaySession
+navigate('/RolePlaySession', { state: { scenario } });
+
+// Receiving state in RolePlaySession
+const { state } = useLocation();
+const scenario = state?.scenario;
+if (!scenario) navigate('/RolePlay'); // Redirect if no state
+```

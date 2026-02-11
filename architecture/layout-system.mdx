@@ -1,0 +1,162 @@
+---
+title: "Layout System"
+description: "Application layout structure including sidebar, header, navigation, and contextual panels"
+---
+
+The PWRU layout system uses a nested structure of layout components to provide consistent navigation, branding, and responsive behavior across all pages.
+
+## Layout Hierarchy
+
+```
+Layout.jsx (root)
+├── Public Pages (no layout chrome)
+│   └── LandingPage / ExternalAuth / PropertyLanding
+└── Protected Pages
+    └── UserProvider
+        └── PartnerProvider
+            └── AppLayout
+                ├── TopHeader (desktop only)
+                ├── MainSidebar (desktop only)
+                ├── Main Content Area
+                │   ├── ContextualTopNav (page-specific tabs)
+                │   └── Page Component
+                ├── ContextualSidebar (context panel)
+                └── MobileBottomNav (mobile only)
+```
+
+## Root Layout (`Layout.jsx`)
+
+The root layout component handles:
+
+### Route Classification
+- Determines if the current page is public or protected
+- Public pages render without authentication or layout chrome
+- Protected pages wrap content in `UserProvider` and `PartnerProvider`
+
+### Theming
+- Loads partner configuration via React Query
+- Converts partner `primaryColor` and `secondaryColor` from hex to HSL
+- Injects CSS custom properties into `:root`:
+  ```css
+  :root {
+    --primary: {h} {s}% {l}%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: {h} {s}% {l}%;
+  }
+  ```
+- Sets global font family (Inter)
+- Applies dark mode detection via `prefers-color-scheme`
+
+### Performance
+- Preconnects to Supabase and Base44 endpoints
+- Global error handling for unhandled rejections and errors
+
+## AppLayout
+
+The main application shell providing the desktop and mobile structure.
+
+### Desktop Layout (768px+)
+
+```
+┌─────────────────────────────────────────────┐
+│  TopHeader (search, notifications, profile) │
+├────────┬────────────────────────────────────┤
+│        │  ContextualTopNav (page tabs)      │
+│  Main  ├────────────────────────────────────┤
+│  Side  │                                    │
+│  bar   │  Page Content (flex-1, scrollable) │
+│        │                                    │
+│        ├────────────────────────────────────┤
+│        │  (ContextualSidebar if open)       │
+└────────┴────────────────────────────────────┘
+```
+
+### Mobile Layout (<768px)
+
+```
+┌─────────────────────────────┐
+│                             │
+│  Page Content               │
+│  (full-width, scrollable)   │
+│                             │
+├─────────────────────────────┤
+│  Safe Area Gap              │
+├─────────────────────────────┤
+│  MobileBottomNav (64px)     │
+└─────────────────────────────┘
+```
+
+## Component Details
+
+### TopHeader
+
+Desktop-only header bar with:
+- App logo and partner branding
+- Global search
+- Notification bell with badge count
+- User profile avatar and dropdown menu
+
+### MainSidebar
+
+Desktop-only left sidebar with:
+- Navigation links to all major sections
+- Active page highlight
+- Collapsible on smaller desktop screens
+- Partner branding in footer
+
+### ContextualTopNav
+
+Page-specific tab navigation rendered at the top of the content area:
+- **Height**: 64px
+- **Background**: White with subtle bottom shadow
+- **Tabs**: Clickable with active state (bottom border accent)
+- **Disabled tabs**: Grayed out with lock icon for premium features
+- **Agent avatars**: Optional avatar images mapped per tab
+- **Subtitles**: Optional description text per tab
+- **Action slot**: Right-aligned button area for page-level actions
+
+### ContextualSidebar
+
+Right-side contextual panel for detailed views:
+
+**Desktop (lg breakpoint+):**
+- Fixed position on the right side
+- Always visible when content is available
+- Dark header (neutral-700) with title
+
+**Mobile:**
+- Slide-in panel from the right edge
+- Width: 85vw on small screens, 420px on sm+
+- Overlay backdrop (click to close)
+- Toggle button with chevron icons
+- 300ms transition duration
+
+**Special behaviors:**
+- Title containing "Copilot" displays "PULSE ai" instead
+- Prevents body scroll when open on mobile
+- Maintains scroll position within the panel
+
+### MobileBottomNav
+
+Mobile-only fixed bottom navigation:
+- **Height**: 64px + safe-area-inset-bottom
+- **Items**: 5 primary navigation icons with labels
+- **Active state**: Highlighted icon and label color
+- **Safe area**: Respects notched device safe areas via `env(safe-area-inset-bottom)`
+
+## Safe Area Handling
+
+The layout accounts for modern device safe areas (notches, rounded corners):
+
+```css
+/* Bottom navigation spacing */
+padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+
+/* Side safe areas */
+padding-left: env(safe-area-inset-left, 0px);
+padding-right: env(safe-area-inset-right, 0px);
+```
+
+## Emergency Access
+
+The `?force-dashboard` query parameter bypasses onboarding gates, providing emergency access to the dashboard for debugging or support purposes.

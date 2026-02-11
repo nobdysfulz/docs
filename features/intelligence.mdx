@@ -1,0 +1,144 @@
+---
+title: "Intelligence (PGIC)"
+description: "Business intelligence dashboard with PULSE, GANE, and MORO scoring, trend analysis, and AI forecasting"
+---
+
+The Intelligence page (`/Intelligence`) is the business analytics dashboard powered by the **Pulse Graph Intelligence Core (PGIC)**. It provides composite scoring across three dimensions, trend analysis, AI insights, and performance forecasting.
+
+## PGIC Scoring System
+
+The PGIC system calculates an **Overall Intelligence Score** (0-100) as a composite of three sub-scores:
+
+### PULSE - Execution & Consistency
+
+Measures daily execution habits and goal progress:
+- Task completion rates
+- Activity consistency (streaks, daily engagement)
+- Goal progression velocity
+
+**Detailed views include:**
+- `ActivityHeatmap` - Visual heatmap of daily activity patterns
+- `ConsistencyTrend` - Line chart of consistency over time
+- `ExecutionBreakdown` - Breakdown of execution metrics by category
+
+### GANE - Predictability & System Usage
+
+Tracks how effectively the user leverages platform tools:
+- Feature adoption rates
+- Automation utilization
+- System engagement depth
+
+**Detailed views include:**
+- `SystemUsageMetrics` - Platform feature usage statistics
+- `AutomationUtilization` - Automation adoption and effectiveness
+
+### MORO - Market Opportunity
+
+Analyzes market conditions in the user's territory:
+- Local market dynamics
+- Supply/demand indicators
+- Price trend analysis
+- Competitive positioning
+
+**Detailed views include:**
+- `MarketSnapshot` - Current market conditions summary
+- `PerformanceVsMarket` - User performance compared to market averages
+
+## Page Layout
+
+- **Contextual Top Nav** - Four tabs: Overview, PULSE Details, GANE Details, MORO Details
+- **Action button** - Refresh button with "last updated" timestamp
+- **Main content area** - Tab-specific dashboards
+
+On mobile, the `MobileAnalyticsPage` component renders with only the Overview tab.
+
+## Overview Tab
+
+### Overall Score Card
+
+Large display showing:
+- Composite score (0-100) with circular progress ring (SVG)
+- Trend indicator (positive/negative change)
+- Description: "Composite of PULSE, GANE, and MORO scores"
+
+### Score Cards Row
+
+Three `ScoreCard` components showing individual PULSE, GANE, and MORO scores with trend indicators.
+
+### Learning Mode Banner
+
+If no activity data has been collected yet (`hasMinimalData()` returns false), an info banner explains that the system is gathering data and scores will appear once enough actions are logged.
+
+### Trend Chart
+
+The `TrendChart` component shows historical score progression over time for all three sub-scores.
+
+### AI Insights & Recommendations
+
+The `InsightsFeed` component displays AI-generated insights categorized by:
+- **Behavior** insights - Link to the ToDo page for action
+- **System** insights - Link to Settings for configuration
+- **Market** insights - Informational market analysis
+
+Each insight has an optional action button that navigates to the relevant page.
+
+### Forecast Card
+
+The `ForecastCard` shows predictive analytics:
+- Growth probability percentage
+- Next period projected score
+- Business plan integration (if available)
+- Goal metrics (GCI target/current, deals target/current)
+
+## PULSE Details Tab
+
+Deep-dive into execution metrics:
+- Score with progress bar
+- Description of what PULSE measures
+- Activity heatmap and consistency trend charts
+- Execution breakdown
+- Filtered insights (behavior category only)
+
+## GANE Details Tab
+
+Deep-dive into system usage metrics:
+- Score with progress bar (blue-themed)
+- System usage and automation utilization panels
+- Trend chart
+- Filtered insights (system category only)
+
+## MORO Details Tab
+
+Deep-dive into market opportunity:
+- Score with progress bar (green-themed)
+- Market snapshot and performance comparison
+- Trend chart
+- Filtered insights (market category only)
+
+## Data Fetching
+
+Intelligence data is loaded via the `usePGICData` custom hook:
+
+```
+usePGICData(userId) → {
+  data: { scores, insights, forecast },
+  loading,
+  error,
+  lastRefreshed,
+  refreshing,
+  refresh
+}
+```
+
+The hook manages:
+- Initial data loading
+- Manual refresh with loading state
+- Error handling
+- Last refresh timestamp tracking
+
+## Business Plan Integration
+
+The page also loads the active `BusinessPlan` for the user to provide context for forecasting:
+- Annual GCI targets
+- Deal targets
+- Used by the ForecastCard for projections

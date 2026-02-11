@@ -1,0 +1,200 @@
+---
+title: "Error Handling"
+description: "Application error handling patterns, global error boundaries, and safe async operations"
+---
+
+PWRU implements error handling at multiple levels: global error boundaries, query-level error handling, and component-level try-catch patterns.
+
+## Global Error Handling
+
+### Unhandled Errors
+
+The `AppLayout` component registers global error handlers:
+
+```jsx
+useEffect(() => {
+  const handleError = (event) => {
+    console.error('Unhandled error:', event.error);
+    // Log to ErrorLog entity for admin review
+  };
+
+  const handleRejection = (event) => {
+    console.error('Unhandled rejection:', event.reason);
+  };
+
+  window.addEventListener('error', handleError);
+  window.addEventListener('unhandledrejection', handleRejection);
+
+  return () => {
+    window.removeEventListener('error', handleError);
+    window.removeEventListener('unhandledrejection', handleRejection);
+  };
+}, []);
+```
+
+### Page Visibility Monitoring
+
+The layout monitors page visibility for bfcache support:
+
+```jsx
+useEffect(() => {
+  const handleVisibilityChange = () => {
+    if (document.visibilityState === 'visible') {
+      // Page became visible again - may need data refresh
+    }
+  };
+  document.addEventListener('visibilitychange', handleVisibilityChange);
+  return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+}, []);
+```
+
+## React Query Error Handling
+
+### Query-Level Errors
+
+Each query can define error handling:
+
+```jsx
+const { data, error, isError } = useQuery({
+  queryKey: ['contacts', userId],
+  queryFn: fetchContacts,
+  onError: (error) => {
+    console.error('Failed to load contacts:', error);
+    // Show toast notification
+  },
+});
+
+// Render error state
+if (isError) {
+  return <ErrorCard message="Failed to load contacts" />;
+}
+```
+
+### Mutation Error Handling
+
+Mutations provide error callbacks:
+
+```jsx
+const mutation = useMutation({
+  mutationFn: createContact,
+  onError: (error) => {
+    toast.error('Failed to create contact');
+    console.error(error);
+  },
+  onSuccess: () => {
+    toast.success('Contact created');
+    queryClient.invalidateQueries(['contacts']);
+  },
+});
+```
+
+## Safe Async Patterns
+
+### Backend Function Calls
+
+All backend function calls are wrapped in try-catch:
+
+```jsx
+const generateContent = async () => {
+  setLoading(true);
+  try {
+    const result = await base44.functions.call('openaiChat', {
+      messages,
+      model: 'gpt-4o',
+      max_tokens: 1500,
+    });
+    setContent(result);
+  } catch (error) {
+    console.error('Content generation failed:', error);
+    setError('Failed to generate content. Please try again.');
+  } finally {
+    setLoading(false);
+  }
+};
+```
+
+### Entity Operations
+
+Entity CRUD operations follow the same pattern:
+
+```jsx
+const saveGoal = async (goalData) => {
+  try {
+    await base44.entities.Goal.create(goalData);
+    queryClient.invalidateQueries(['goals']);
+  } catch (error) {
+    console.error('Failed to save goal:', error);
+    // Show user-friendly error message
+  }
+};
+```
+
+## Loading States
+
+### Suspense Boundaries
+
+Lazy-loaded components (especially in Settings) use React Suspense:
+
+```jsx
+const BillingTab = React.lazy(() => import('./BillingTab'));
+
+<Suspense fallback={<SettingsSkeleton />}>
+  <BillingTab />
+</Suspense>
+```
+
+### Skeleton Loading
+
+The application uses shadcn/ui `Skeleton` components for loading states:
+- Full-page skeletons for initial data loads
+- Component-level skeletons for individual sections
+- Table row skeletons for list views
+
+### Conditional Rendering
+
+Data-dependent rendering uses the `enabled` flag:
+
+```jsx
+const { data } = useQuery({
+  queryKey: ['contacts', user?.id],
+  queryFn: fetchContacts,
+  enabled: !!user?.id,  // Don't fetch until user is loaded
+});
+```
+
+## Error Logging
+
+### Admin Error Log
+
+Application errors can be logged to the `ErrorLog` entity for admin review:
+- Error message and stack trace
+- User ID and timestamp
+- Page/component where the error occurred
+- Viewable in Settings > System Management > Error Logs
+
+### Console Logging
+
+Development and production both use `console.error` for error tracking. The application does not currently integrate with external error tracking services (e.g., Sentry).
+
+## User-Facing Error States
+
+### Error Cards
+
+Components render error states with:
+- Clear error message
+- Retry button where applicable
+- Fallback content or empty states
+
+### Toast Notifications
+
+Transient errors use toast notifications:
+- Success (green) for completed operations
+- Error (red) for failed operations
+- Info (blue) for informational messages
+
+### Empty States
+
+When queries return no data, components show helpful empty states:
+- Icon and descriptive message
+- Call-to-action button (e.g., "Add your first contact")
+- Contextual help text
