@@ -1,22 +1,243 @@
 ---
-title: "Submit A Support Ticket"
+title: "Submit a Support Ticket"
+description: "Get help from the PULSEIntel Pro support team"
 ---
-<iframe
-    src="https://api.leadconnectorhq.com/widget/form/T8G4hNBmUHY0jKFKsax7"
-    style="width:100%;height:100%;border:none;border-radius:3px"
-    id="inline-T8G4hNBmUHY0jKFKsax7" 
-    data-layout="{'id':'INLINE'}"
-    data-trigger-type="alwaysShow"
-    data-trigger-value=""
-    data-activation-type="alwaysActivated"
-    data-activation-value=""
-    data-deactivation-type="neverDeactivate"
-    data-deactivation-value=""
-    data-form-name="Support Ticket"
-    data-height="1480"
-    data-layout-iframe-id="inline-T8G4hNBmUHY0jKFKsax7"
-    data-form-id="T8G4hNBmUHY0jKFKsax7"
-    title="Support Ticket"
-        >
-</iframe>
-<script src="https://link.msgsndr.com/js/form_embed.js"></script>
+
+Have a question or running into an issue? Fill out the form below and our support team will respond to you as soon as possible. You can also reach us directly at [hello@pulseintelpro.com](mailto:hello@pulseintelpro.com).
+
+<Note>
+  **Don't have an account yet?** Register at [pulseintelpro.com](https://pulseintelpro.com) to get started.
+</Note>
+
+<Warning>
+  **Form setup required:** This form uses [Formspree](https://formspree.io) to deliver submissions to your inbox. To activate email delivery: (1) create a free Formspree account, (2) create a new form pointed at **hello@pulseintelpro.com**, and (3) replace `YOUR_FORMSPREE_ID` in this file's form `action` with your Formspree form ID.
+</Warning>
+
+<div style={{maxWidth: "680px", margin: "0 auto"}}>
+<form
+  action="https://formspree.io/f/YOUR_FORMSPREE_ID"
+  method="POST"
+  encType="multipart/form-data"
+  style={{display: "flex", flexDirection: "column", gap: "20px"}}
+>
+
+  {/* Full Name */}
+  <div style={{display: "flex", flexDirection: "column", gap: "6px"}}>
+    <label htmlFor="name" style={{fontWeight: "600", fontSize: "14px"}}>
+      Full Name <span style={{color: "#ef4444"}}>*</span>
+    </label>
+    <input
+      id="name"
+      type="text"
+      name="name"
+      required
+      placeholder="Jane Smith"
+      style={{
+        padding: "10px 14px",
+        borderRadius: "6px",
+        border: "1px solid #d1d5db",
+        fontSize: "14px",
+        width: "100%",
+        boxSizing: "border-box"
+      }}
+    />
+  </div>
+
+  {/* Email Address */}
+  <div style={{display: "flex", flexDirection: "column", gap: "6px"}}>
+    <label htmlFor="email" style={{fontWeight: "600", fontSize: "14px"}}>
+      Email Address <span style={{color: "#ef4444"}}>*</span>
+    </label>
+    <input
+      id="email"
+      type="email"
+      name="email"
+      required
+      placeholder="jane@example.com"
+      style={{
+        padding: "10px 14px",
+        borderRadius: "6px",
+        border: "1px solid #d1d5db",
+        fontSize: "14px",
+        width: "100%",
+        boxSizing: "border-box"
+      }}
+    />
+  </div>
+
+  {/* Phone Number */}
+  <div style={{display: "flex", flexDirection: "column", gap: "6px"}}>
+    <label htmlFor="phone" style={{fontWeight: "600", fontSize: "14px"}}>
+      Phone Number <span style={{color: "#6b7280", fontWeight: "400"}}>(optional)</span>
+    </label>
+    <input
+      id="phone"
+      type="tel"
+      name="phone"
+      placeholder="+1 (555) 000-0000"
+      style={{
+        padding: "10px 14px",
+        borderRadius: "6px",
+        border: "1px solid #d1d5db",
+        fontSize: "14px",
+        width: "100%",
+        boxSizing: "border-box"
+      }}
+    />
+  </div>
+
+  {/* Support Category */}
+  <div style={{display: "flex", flexDirection: "column", gap: "6px"}}>
+    <label htmlFor="category" style={{fontWeight: "600", fontSize: "14px"}}>
+      Support Category <span style={{color: "#ef4444"}}>*</span>
+    </label>
+    <select
+      id="category"
+      name="category"
+      required
+      style={{
+        padding: "10px 14px",
+        borderRadius: "6px",
+        border: "1px solid #d1d5db",
+        fontSize: "14px",
+        width: "100%",
+        boxSizing: "border-box",
+        backgroundColor: "white"
+      }}
+    >
+      <option value="">— Select a category —</option>
+      <option value="Billing & Subscription">Billing &amp; Subscription</option>
+      <option value="Account Access / Login">Account Access / Login</option>
+      <option value="Technical Issue">Technical Issue</option>
+      <option value="AI Agents (NOVA, PHOENIX, SIRIUS, VEGA)">AI Agents (NOVA, PHOENIX, SIRIUS, VEGA)</option>
+      <option value="Content Studio">Content Studio</option>
+      <option value="CRM & Contacts">CRM &amp; Contacts</option>
+      <option value="RolePlay Training">RolePlay Training</option>
+      <option value="Marketing Hub">Marketing Hub</option>
+      <option value="Goals & Dashboard">Goals &amp; Dashboard</option>
+      <option value="Other">Other</option>
+    </select>
+  </div>
+
+  {/* Subject */}
+  <div style={{display: "flex", flexDirection: "column", gap: "6px"}}>
+    <label htmlFor="subject" style={{fontWeight: "600", fontSize: "14px"}}>
+      Subject <span style={{color: "#ef4444"}}>*</span>
+    </label>
+    <input
+      id="subject"
+      type="text"
+      name="subject"
+      required
+      placeholder="Brief summary of your issue"
+      style={{
+        padding: "10px 14px",
+        borderRadius: "6px",
+        border: "1px solid #d1d5db",
+        fontSize: "14px",
+        width: "100%",
+        boxSizing: "border-box"
+      }}
+    />
+  </div>
+
+  {/* Description */}
+  <div style={{display: "flex", flexDirection: "column", gap: "6px"}}>
+    <label htmlFor="message" style={{fontWeight: "600", fontSize: "14px"}}>
+      Describe Your Issue <span style={{color: "#ef4444"}}>*</span>
+    </label>
+    <textarea
+      id="message"
+      name="message"
+      required
+      rows={6}
+      placeholder="Please describe the issue in as much detail as possible. Include any error messages, steps you've already tried, and which device or browser you're using."
+      style={{
+        padding: "10px 14px",
+        borderRadius: "6px",
+        border: "1px solid #d1d5db",
+        fontSize: "14px",
+        width: "100%",
+        boxSizing: "border-box",
+        resize: "vertical",
+        fontFamily: "inherit"
+      }}
+    />
+  </div>
+
+  {/* Screenshot Upload */}
+  <div style={{display: "flex", flexDirection: "column", gap: "6px"}}>
+    <label htmlFor="screenshot" style={{fontWeight: "600", fontSize: "14px"}}>
+      Screenshot <span style={{color: "#6b7280", fontWeight: "400"}}>(optional)</span>
+    </label>
+    <p style={{margin: "0", fontSize: "13px", color: "#6b7280"}}>
+      Attach an image that shows the issue. Accepted formats: PNG, JPG, JPEG, GIF, WEBP.
+    </p>
+    <input
+      id="screenshot"
+      type="file"
+      name="screenshot"
+      accept="image/png,image/jpeg,image/gif,image/webp,.png,.jpg,.jpeg,.gif,.webp"
+      style={{
+        padding: "8px 0",
+        fontSize: "14px",
+        width: "100%"
+      }}
+    />
+  </div>
+
+  {/* Divider */}
+  <hr style={{border: "none", borderTop: "1px solid #e5e7eb", margin: "4px 0"}} />
+
+  {/* Disclosure Checkbox 1 — Required */}
+  <div style={{display: "flex", gap: "12px", alignItems: "flex-start"}}>
+    <input
+      id="consent_transactional"
+      type="checkbox"
+      name="consent_transactional"
+      required
+      style={{marginTop: "3px", flexShrink: 0, accentColor: "#7C3AED", width: "16px", height: "16px"}}
+    />
+    <label htmlFor="consent_transactional" style={{fontSize: "13px", lineHeight: "1.5", color: "#374151"}}>
+      By checking this box, I consent to receive transactional messages related to my account, orders, or services I have requested. These messages may include appointment reminders, order confirmations, and account notifications among others. Message frequency may vary. All terms and details can be found in our <a href="https://powerunitcoaching.com/policies/privacypolicy" target="_blank" rel="noopener noreferrer" style={{color: "#7C3AED"}}>Privacy Policy</a>. Message &amp; Data rates may apply. Reply HELP for help or STOP to opt-out. <span style={{color: "#ef4444", fontWeight: "600"}}>*</span>
+    </label>
+  </div>
+
+  {/* Disclosure Checkbox 2 — Optional */}
+  <div style={{display: "flex", gap: "12px", alignItems: "flex-start"}}>
+    <input
+      id="consent_marketing"
+      type="checkbox"
+      name="consent_marketing"
+      style={{marginTop: "3px", flexShrink: 0, accentColor: "#7C3AED", width: "16px", height: "16px"}}
+    />
+    <label htmlFor="consent_marketing" style={{fontSize: "13px", lineHeight: "1.5", color: "#374151"}}>
+      By checking this box, I consent to receive marketing and promotional messages, including special offers, discounts, new product updates among others. Message frequency may vary. Message &amp; Data rates may apply. Reply HELP for help or STOP to opt-out.
+    </label>
+  </div>
+
+  {/* Privacy Policy & Terms of Use Notice */}
+  <p style={{fontSize: "12px", color: "#9ca3af", margin: "0", lineHeight: "1.5"}}>
+    By submitting this form, you agree to our <a href="https://powerunitcoaching.com/policies/privacypolicy" target="_blank" rel="noopener noreferrer" style={{color: "#7C3AED"}}>Privacy Policy</a> and <a href="https://powerunitcoaching.com/policies/terms" target="_blank" rel="noopener noreferrer" style={{color: "#7C3AED"}}>Terms of Use</a>.
+  </p>
+
+  {/* Submit Button */}
+  <button
+    type="submit"
+    style={{
+      backgroundColor: "#7C3AED",
+      color: "white",
+      padding: "12px 24px",
+      borderRadius: "6px",
+      border: "none",
+      fontSize: "15px",
+      fontWeight: "600",
+      cursor: "pointer",
+      alignSelf: "flex-start"
+    }}
+  >
+    Submit Support Ticket
+  </button>
+
+</form>
+</div>
