@@ -10,7 +10,7 @@ PULSEIntel Pro gives you a team of four AI assistants, each designed to help wit
 | Agent | What They Do | Available On |
 |-------|-------------|-------------|
 | **NOVA** — Executive Assistant | Business strategy, scheduling advice, general questions | Subscriber |
-| **PHOENIX** — Leads Agent | AI-powered outbound calling and lead qualification | Subscriber Plus |
+| **PHOENIX** — Leads Agent | AI-powered inbound & outbound calling, lead qualification, campaign management | Subscriber Plus |
 | **SIRIUS** — Content Agent | Social media posts, marketing copy, email drafts | Subscriber |
 | **VEGA** — Transaction Coordinator | Transaction management, document tracking, closing timelines | Subscriber |
 
@@ -38,17 +38,38 @@ In the right panel, you can:
 
 ## PHOENIX — Your Leads Agent
 
-PHOENIX handles AI-powered outbound calling to help you qualify leads and book appointments at scale.
+PHOENIX is a full-featured voice AI that handles both inbound and outbound calls, helping you qualify leads and book appointments at scale.
 
 <Note>
 PHOENIX is available on the **Subscriber Plus** plan. The first time you use PHOENIX, you'll go through a quick setup to configure your calling preferences.
 </Note>
 
-### Making Calls
-- **Call Now** — Make a single call to a specific contact
+### Setting Up PHOENIX
+
+Before PHOENIX can start calling, complete the initial configuration:
+
+1. **Voice & Personality** — Choose PHOENIX's voice and set its conversational style
+2. **Greeting** — Write the opening script PHOENIX uses when calls connect
+3. **Calendar Connection** — Link your calendar so PHOENIX can book appointments in real time
+4. **Availability** — Set the hours and days PHOENIX is active for inbound calls
+5. **Qualification Questions** — Define the questions PHOENIX asks to qualify leads
+6. **Call Routing** — Configure what happens after a call (forward to you, leave voicemail, send follow-up text)
+
+<Tip>
+Test PHOENIX before going live. Use the **Test Agent** button to call yourself and confirm the greeting, questions, and routing all work as expected.
+</Tip>
+
+### Making Outbound Calls
+
+- **Call Now** — Make a single outbound call to a specific contact immediately
 - **Start Campaign** — Launch a calling campaign to reach multiple contacts automatically
 
+### Inbound Calls
+
+PHOENIX answers incoming calls on your behalf when you're unavailable or during off-hours. It qualifies the caller, collects their information, and books appointments directly on your calendar.
+
 ### Viewing Your Call History
+
 The PHOENIX tab shows a log of all your calls with:
 - Contact name and phone number
 - When the call happened
@@ -56,14 +77,61 @@ The PHOENIX tab shows a log of all your calls with:
 - How long the call lasted
 
 ### Reviewing Call Details
+
 Click any call in the list to see:
 - Full call details
 - Listen to the recording
 - Read the transcript
 - Overall call metrics in the right panel
+- Outcome logged (appointment booked, not interested, callback requested, etc.)
+
+### Managing Calls
+
+From the call detail view, you can:
+- **Log an outcome** — Record what happened (appointment set, not interested, left voicemail, etc.)
+- **Edit call details** — Update notes or correct information
+- **Flag a call** — Mark calls for review or follow-up
+
+### Call Center Dashboard
+
+The Call Center gives you a high-level view of your calling activity:
+- **Live call monitoring** — See active calls in real time
+- **Call queue** — View calls waiting to be handled
+- **Performance reports** — Track calls made, appointments set, connection rates, and more
+- **Notifications** — Get alerted when PHOENIX books an appointment or flags a call
 
 ### Downloading Call Logs
+
 Click **Download Logs** to export your call history as a spreadsheet (CSV file).
+
+## Campaign Management
+
+PHOENIX supports four campaign types for automated outreach:
+
+| Campaign Type | What It Does |
+|--------------|-------------|
+| **Drip** | Send a sequence of messages over time (e.g., follow up at 1 day, 3 days, 1 week) |
+| **Blast** | Send a one-time message to a group of contacts at once |
+| **Voice** | Place automated outbound calls to a list of contacts |
+| **Re-engagement** | Automatically reach out to contacts who've gone cold |
+
+### Creating a Campaign
+
+1. From the PHOENIX tab or CRM Campaigns section, click **Create Campaign**
+2. Choose your campaign type
+3. Name your campaign and set the goal
+4. Select your target audience using filters (lead status, pipeline stage, tags, location, etc.)
+5. Configure exclusions (opt-outs, contacts contacted recently, etc.)
+6. Write your messages or configure call scripts. Use merge fields like `{{first_name}}` and `{{address}}` to personalize automatically.
+7. Set your schedule and click **Launch**
+
+### Campaign Analytics
+
+After launching, track performance in the Campaign dashboard:
+- Messages sent, delivered, and responded to
+- Appointments booked
+- Opt-outs and failed deliveries
+- A/B test results (if you set up multiple message variants)
 
 ## SIRIUS — Your Content Agent
 

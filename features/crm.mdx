@@ -17,7 +17,7 @@ Your main contact list shows everyone in your database.
 - Contacts are displayed in a table with name, phone, email, status, and pipeline stage
 - Click any contact to see their full details in the right panel
 - Use the **search bar** to find contacts by name, email, or phone number
-- **Filter** by lead status or pipeline stage to narrow your view
+- **Filter** by lead status, pipeline stage, tags, or other criteria to narrow your view
 
 ### Adding a Contact
 1. Click **Add Contact**
@@ -26,19 +26,33 @@ Your main contact list shows everyone in your database.
 4. Click **Save**
 
 ### Importing Contacts in Bulk
+
 If you have a list of contacts in a spreadsheet:
 1. Click the **Import** button
-2. Upload your CSV file
-3. Map your columns to PULSEIntel Pro fields
-4. Click **Import**
+2. Upload your CSV file (.csv format — if you have an Excel file, save it as CSV first)
+3. Map your columns to PULSEIntel Pro fields (match "First Name" in your file to the First Name field, etc.)
+4. Preview the import to confirm everything looks right
+5. Click **Import**
+
+<Note>
+CSV files must have at least a name column to import. Files larger than 500 contacts should be split into smaller batches to avoid timeouts. Special characters in your file may cause import errors — remove or replace them if the import fails.
+</Note>
 
 ### Contact Details
 Click any contact to see their full profile in the right panel:
-- **Contact info** — Name, email, phone, and all details (you can edit right here)
+- **Contact info** — Name, email, phone, and all details (editable inline)
+- **Custom fields** — Additional fields specific to your business (buyer timeline, price range, property type preferences, etc.)
 - **Activity timeline** — A history of every interaction with this contact
-- **Notes** — Add and view notes
-- **Tags** — Organize contacts with custom labels
+- **Notes** — Add and view notes about the relationship
+- **Tags** — Organize contacts with custom labels for easy filtering
 - **Linked transactions** — Any deals associated with this contact
+
+### Organizing Contacts
+
+Keep your database clean and actionable:
+- **Tags** — Add custom labels to group contacts (e.g., "sphere of influence," "hot buyer," "past client")
+- **Lead Status** — Track where a contact is in your funnel (New, Active, Nurture, Closed, Archive)
+- **Search & Filter** — Combine search and filters to build targeted lists for outreach
 
 ## Pipeline
 
@@ -56,32 +70,90 @@ The Pipeline view is the fastest way to get a snapshot of your business. Check i
 ## Conversations
 
 Manage all your communications with contacts in one place:
-- **SMS** — View and send text messages
-- **Email** — Read and compose email threads
+- **SMS** — View and send text messages to any contact
+- **Email** — Read and compose email threads linked to your contacts
 - **Voice** — Review call history and listen to recordings
+
+All incoming and outgoing messages are logged automatically to the contact's activity timeline.
+
+## Activities
+
+Log every interaction with your contacts to maintain an accurate relationship history.
+
+### Activity Types
+
+| Activity | When to Use |
+|----------|------------|
+| **Call** | Phone conversations, voicemails left |
+| **Email** | Emails sent or received |
+| **Meeting** | In-person or video meetings |
+| **Text** | SMS messages |
+| **Property Showing** | Showing a property to a buyer |
+| **Open House** | Hosting an open house |
+| **Note** | General notes or reminders |
+
+### Logging an Activity
+
+**Quick log:**
+1. Click the contact
+2. Click **Log Activity** in the right panel
+3. Select the activity type
+4. Add a note and any outcome
+5. Click **Save**
+
+**From a task:** If you complete a task tied to a contact, you can log the outcome directly from the task.
+
+### Automatic Activity Logging
+
+Activities logged through other parts of PULSEIntel Pro sync to your contacts automatically:
+- **PHOENIX calls** — Inbound and outbound calls are logged with recording links
+- **Conversations** (SMS/email) — Messages sent through the Conversations tab are logged
+- **Task completions** — When you mark dashboard tasks done, the activity is recorded
 
 ## Transactions
 
-Track your deals from contract to close:
-- View all active and completed transactions
-- Track closing dates, commission amounts, and key milestones
-- Link transactions to contacts
-- Monitor document checklists to make sure nothing falls through the cracks
+Track your deals from contract to close.
 
-## Listings
+### Creating a Transaction
+1. Click **Transactions** at the top of the CRM
+2. Click **New Transaction**
+3. Enter the property address and deal details
+4. Link the transaction to a contact (buyer or seller)
+5. Set the expected closing date and commission amount
+6. Click **Save**
 
-Manage your property listings:
-- Add listing details like address, price, property type, and status
-- Track MLS information
-- Organize listing photos
-- Connect listings to interested buyer contacts
+### Transaction Details
+
+Each transaction has a dedicated view with:
+- **Property info** — Address, type, list price, and sale price
+- **Timeline** — Key dates (contract date, inspection deadline, financing deadline, closing date)
+- **Parties** — Buyer, seller, co-op agent, title company, lender, and other parties involved
+- **Tasks & checklists** — Action items to complete before closing (inspection, appraisal, document collection, etc.)
+- **Notes** — Running notes on the deal
+- **Commission tracking** — Projected and actual commission amounts
+
+### Transaction Stages
+
+Move transactions through stages as the deal progresses:
+- Pre-Contract
+- Under Contract
+- Inspection Period
+- Financing Contingency
+- Clear to Close
+- Closed
+- Cancelled
+
+### Checklists
+
+Each transaction stage can have a checklist of required tasks. Check off items as you complete them to make sure nothing falls through the cracks before closing.
 
 ## Tasks
 
 Create and manage follow-up tasks tied to specific contacts:
 - Set due dates and priority levels
 - Track completion status
-- Make sure you never miss a follow-up
+- Tasks tied to contacts appear on the contact's activity timeline
+- Overdue tasks surface on your Dashboard so you never miss a follow-up
 
 ## Insights
 
@@ -104,16 +176,30 @@ Set up workflows that run automatically to save you time:
 Build a library of reusable messages:
 - Browse pre-built templates for common situations (initial outreach, follow-up, closing, etc.)
 - Create your own custom templates
-- Use smart variables like contact name and property address that fill in automatically
+- Use smart variables like `{{first_name}}` and `{{address}}` that fill in automatically
 - Organize templates by category for quick access
 
 ## Campaigns
 
 Run marketing campaigns right from your CRM:
-- Create targeted campaigns for specific groups of contacts
-- Schedule email and SMS campaigns
-- Track open rates, responses, and overall performance
-- Run multi-channel outreach (email + SMS + social)
+
+| Campaign Type | What It Does |
+|--------------|-------------|
+| **Drip** | Sends a sequence of messages over days or weeks |
+| **Blast** | One-time message to a targeted group |
+| **Voice** | Automated outbound calls via PHOENIX |
+| **Re-engagement** | Reaches out to contacts who've gone quiet |
+
+### Creating a Campaign
+1. Click **Campaigns** in the CRM
+2. Click **Create Campaign**
+3. Choose your campaign type
+4. Define your target audience with filters (lead status, tags, pipeline stage, location, etc.)
+5. Set exclusions (opt-outs, recently contacted, etc.)
+6. Write your message. Use merge fields like `{{first_name}}` to personalize automatically.
+7. Schedule or launch immediately
+
+Track results — open rates, responses, and appointments — in the Campaign analytics dashboard.
 
 ## Mercury
 
