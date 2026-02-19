@@ -66,16 +66,12 @@
   "navbar": {
     "links": [
       {
-        "label": "Support",
+        "label": "Email Support",
         "href": "mailto:team@powerunitcoaching.com"
       },
       {
         "label": "Login",
         "href": "https://app.pulseintelpro.com"
-      },
-      {
-        "label": "Submit A Ticket",
-        "href": "https://powerunitcoaching.com/support"
       }
     ]
   },
