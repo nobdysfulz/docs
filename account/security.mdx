@@ -17,6 +17,16 @@ PULSEIntel Pro uses **Google OAuth** for authentication. This means:
 Enable **two-factor authentication (2FA)** on your Google account for the strongest protection. This secures both your Google account and your PULSEIntel Pro access. You can set this up at [myaccount.google.com/security](https://myaccount.google.com/security).
 </Tip>
 
+## Session Timeout
+
+For your security, PULSEIntel Pro automatically signs you out after **30 minutes of inactivity**. This protects your account if you step away from your computer or leave a browser tab open.
+
+- You'll see a warning before the session expires so you have a chance to stay signed in
+- Any unsaved work will be preserved — you'll pick up where you left off after signing back in
+- On mobile, the app keeps your session active as long as the app is in the foreground
+
+If you're being signed out more frequently than expected, check that you're not leaving the app idle for extended periods on shared devices.
+
 ## Security Settings
 
 To access security settings:
@@ -62,6 +72,7 @@ Take these steps immediately:
 - Goals, tasks, and activity history
 - Generated content and conversation history with AI agents
 - Billing and subscription information
+- Call recordings and transcripts (if you use PHOENIX)
 
 ### Who Can See Your Data?
 - **Only you** can access your account data
@@ -69,10 +80,35 @@ Take these steps immediately:
 - AI agents only have access to your data — never other users' information
 - PULSEIntel Pro support staff may access your account data only when assisting you with a support request
 
+### Data Retention
+
+PULSEIntel Pro retains your data according to the following schedule:
+
+| Data Type | Retention Period |
+|-----------|----------------|
+| Account & profile data | Life of account + 90 days after deletion |
+| Contacts & CRM data | Life of account + 90 days after deletion |
+| Transaction records | 7 years (legal/financial requirement) |
+| Call recordings & transcripts | 1 year |
+| AI conversation history | 1 year |
+| Billing records | 7 years |
+
+After your account is deleted, data is removed from active systems within 90 days. Some data may be retained longer for legal, financial, or compliance purposes as noted above.
+
 ### Data Export
 If you need to export your data:
 - Contact [support@pwru.com](mailto:support@pwru.com) to request a data export
 - Administrators can access export tools in the admin settings
+
+## Platform Security
+
+PULSEIntel Pro is built with enterprise-grade security controls:
+
+- **Encrypted in transit** — All data sent between your browser and our servers uses HTTPS/TLS encryption
+- **Encrypted at rest** — Your stored data is encrypted in our database
+- **Access controls** — Your data is protected by authentication and authorization checks on every request
+- **Security monitoring** — We monitor for suspicious activity and anomalies 24/7
+- **Input validation** — All data submitted to the platform is validated and sanitized to prevent common web vulnerabilities
 
 ## Questions?
 
